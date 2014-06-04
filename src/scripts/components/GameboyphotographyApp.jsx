@@ -42,14 +42,22 @@ var GameboyphotographyApp = React.createClass({
   },
 
   addPhoto: function(photo){
-    var newPhotos = this.state.photos;
+    var newPhotos = this.state.photos,
+        newState;
+
     photo.id = this.state.photos.length;
 
     newPhotos.push(photo);
+    newState = {
+          photos: newPhotos
+    };
 
-    this.setState({
-      photos: newPhotos
-    });
+    if (this.state.photos.length === 1){
+        newState.currentPhotoIndex = 0;
+        newState.currentPhoto = newPhotos[0];
+    }
+
+    this.setState(newState);
   },
 
   selectPhoto: function(photoIndex){
@@ -81,11 +89,13 @@ var GameboyphotographyApp = React.createClass({
         return (
             <div className='main'>
                 <Controls></Controls>
-                <PhotoViewer currentPhoto={this.state.currentPhoto}></PhotoViewer>
                 <Photostrip selectPhoto={this.selectPhoto}
                 currentPhotoIndex={this.state.currentPhotoIndex}
                 photos={this.state.photos}>
                 </Photostrip>
+                <div className="spacearound">
+                    <PhotoViewer currentPhoto={this.state.currentPhoto}></PhotoViewer>
+                </div>
             </div>
         );
     } else {

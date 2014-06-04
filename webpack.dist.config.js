@@ -52,6 +52,9 @@ module.exports = {
         test: /\.png/,
         loader: 'url-loader?limit=10000&minetype=image/png'
       }, {
+        test: /\.svg/,
+        loader: 'url-loader?limit=10000&mimetype=image/svg+xml'
+      }, {
         test: /\.jsx$/,
         loader: 'jsx-loader'
       }

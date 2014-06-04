@@ -6,7 +6,7 @@
   flex-grow: 0;
   flex-shrink: 0;
 
-  border: 3px dashed #fff;
+  border: 3px dashed #aaa;
 
   transition: all 0.5s ease;
 
@@ -15,11 +15,13 @@
 }
 
 .peek .uploadTarget{
-    background-color: #555;
+    border: 3px dashed #ccc;
+    background-color: #999;
 }
 
 .uploadTarget.hover{
-  border: 3px dashed #777;
+  border: 3px dashed #fff;
+    background-color: #999;
 }
 
 .uploading .uploadTarget{

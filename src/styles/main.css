@@ -14,5 +14,5 @@ html, body {
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
-  align-content: stretch;
+  align-content: flex-start;
 }
