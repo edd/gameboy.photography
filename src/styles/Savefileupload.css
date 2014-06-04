@@ -1,0 +1,32 @@
+.uploadTarget{
+  display: flex;
+
+  width: 300px;
+  height: 250px;
+  flex-grow: 0;
+  flex-shrink: 0;
+
+  border: 3px dashed #fff;
+
+  transition: all 0.5s ease;
+
+  background: transparent url('../images/iconmonstr-upload-9-icon.svg') center center no-repeat;
+  background-size: 50% 50%;
+}
+
+.peek .uploadTarget{
+    background-color: #555;
+}
+
+.uploadTarget.hover{
+  border: 3px dashed #777;
+}
+
+.uploading .uploadTarget{
+  background-image: url('../images/iconmonstr-loading-6-icon.svg');
+  border: 1px dashed #f00;
+}
+
+.uploadTarget.hidden, .uploadTarget .hidden{
+  display: none;
+}

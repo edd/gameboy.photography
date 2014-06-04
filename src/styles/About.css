@@ -1,0 +1,10 @@
+.about{
+    transition: all 0.3s ease;
+    width: 100%;
+    background: #fff;
+    opacity: 0;
+}
+
+.home .about {
+    opacity: 1;
+}

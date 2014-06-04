@@ -1,0 +1,10 @@
+.controls{
+    display: flex;
+    background: #fff;
+    width: 100%;
+    height: 24px;
+}
+
+.controls.hidden{
+    display: none;
+}
