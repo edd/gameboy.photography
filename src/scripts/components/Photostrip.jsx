@@ -11,16 +11,10 @@ require('../../styles/Photostrip.css');
 var Photostrip = React.createClass({
   /*jshint ignore:start */
 
-  selectPhoto: function(event){
-      var photoId = event.target.getAttribute('rel');
-
-      this.props.selectPhoto(photoId);
-  },
-
   render: function () {
     var photoNodes = this.props.photos.map(function (photo) {
-      return <li key={photo.id} className="photo"><Photo photo={photo}></Photo></li>;
-    });
+      return <li key={photo.id} className="photo"><Photo filter={this.props.filter} photo={photo}></Photo></li>;
+    }.bind(this));
 
     return (
       <ol className="photoList" onClick={this.selectPhoto}>

@@ -1,10 +1,39 @@
 .about{
     transition: all 0.3s ease;
-    width: 100%;
+
     background: #fff;
-    opacity: 0;
 }
 
-.home .about {
-    opacity: 1;
+.peek .about {
+    opacity: 0.1;
+}
+
+
+.about .hero{
+  display: block;
+  background: #f7cf3c;
+  width: 100%;
+  height: 10rem;
+}
+
+.about .illustration{
+  margin-top: 3rem;
+}
+
+.about .block{
+  padding: 1rem 3rem;
+}
+
+.about .instructions{
+  padding: 1rem 14rem;
+}
+
+.about .gallery li{
+  display: inline-block;
+  width: 25%;
+  text-align: center;
+}
+
+.about .gallery img{
+  border: 3px solid #FFEE00;
 }

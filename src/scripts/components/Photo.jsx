@@ -37,21 +37,22 @@ var Photo = React.createClass({
     return this.state.height * this.props.scale;
   },
 
+  getImageData: function(){
+    return this.getDOMNode().toDataURL();
+  },
+
   componentDidMount: function(){
     this.getContext();
     this.drawPhoto();
   },
 
   shouldComponentUpdate: function(nextProps, nextState){
-    if (nextProps.photo.id !== this.props.photo.id){
+    if (nextProps.filter !== this.props.filter
+          && typeof nextProps.filter === 'function' ){
         this.getContext();
 
-        if (this.context !== false){
-            this.context.clearRect(0, 0, this.getWidth(), this.getHeight());
-            this.drawPhoto();
-
-            return false;
-        }
+       var imageData = nextProps.filter(this.context.getImageData(0, 0, this.getWidth(), this.getHeight()));
+       this.context.putImageData(imageData, 0, 0);
     }
 
     return false;
@@ -65,6 +66,7 @@ var Photo = React.createClass({
 
   drawPhoto: function(){
       this.props.photo.pixels.map(this.drawPixel);
+
   },
 
   drawPixel: function(pixel){
@@ -75,7 +77,7 @@ var Photo = React.createClass({
     /*jshint ignore:start */
   render: function () {
     return (
-        <canvas rel={this.props.photo.id} width={this.getWidth()} height={this.getWidth()}>
+        <canvas rel={this.props.photo.id} width={this.getWidth()} height={this.getHeight()}>
         </canvas>
       )
   }

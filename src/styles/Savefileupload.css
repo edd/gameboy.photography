@@ -1,10 +1,6 @@
 .uploadTarget{
-  display: flex;
-
   width: 300px;
   height: 250px;
-  flex-grow: 0;
-  flex-shrink: 0;
 
   border: 3px dashed #aaa;
 
@@ -12,6 +8,17 @@
 
   background: transparent url('../images/iconmonstr-upload-9-icon.svg') center center no-repeat;
   background-size: 50% 50%;
+
+  position: absolute;
+  left: 0;
+  right: 0;
+
+  z-index: -1;
+  margin: 20px auto;
+}
+
+.peek .uploadTarget{
+    z-index: 1;
 }
 
 .peek .uploadTarget{

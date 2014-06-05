@@ -1,6 +1,12 @@
 .photoList{
     display: flex;
-    overflow-x: scroll;
     width: 100%;
-    height: 128px;
+    height: 100%;
+    justify-content: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.photoList .photo{
+    margin: 0 0 5px 5px;
 }
