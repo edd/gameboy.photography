@@ -115,6 +115,7 @@ var GameboyphotographyApp = React.createClass({
   /*jshint ignore:start */
   render: function() {
     if (this.state.status === states.UPLOADED) {
+      document.documentElement.className='processing';
         return (
             <div className='container'>
                 <Controls setFilter={this.setFilter}></Controls>
@@ -126,7 +127,9 @@ var GameboyphotographyApp = React.createClass({
             </div>
         );
     } else {
-        return (
+      document.documentElement.className='home';
+
+      return (
             <div className={this.state.status + ' main'} onDragOver={this.onDragOver} onDragLeave={this.onDragLeave} onDrop={this.onDrop}>
                 <SaveFileUpload photoParser={this.parsePhotos}></SaveFileUpload>
                 <About></About>

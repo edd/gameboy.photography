@@ -1,11 +1,48 @@
 .controls{
-    display: border-box;
-    background: #fff;
+    box-sizing: border-box;
+    background: #FFDC3B;
     width: 100%;
     margin: 0 0 10px 0;
     padding: 10px;
 }
+  .controls ul{
+    padding: 0;
+    margin: 0;
+  }
 
 .controls.hidden{
     display: none;
 }
+
+  .controls button{
+    background: #FFF2A0;
+    padding: 10px 10px 10px 35px;
+    border: 0;
+    border-radius: 5px;
+    border: 1px solid transparent;
+    -webkit-transition: all 0.3s ease;
+  }
+
+  .controls select{
+    display: none;
+  }
+
+  .controls select:focus{
+    display: block;
+  }
+
+  .controls .control{
+    display: inline;
+  }
+
+  .controls button:hover, .controls button:focus{
+    border: 1px solid #282828;
+  }
+
+  .controls .zip{
+    background: #FFF2A0 url(../images/iconmonstr-zip-9-icon-24.png) 5px center no-repeat;
+  }
+
+  .controls .filter{
+    background: #FFF2A0 url(../images/iconmonstr-control-panel-9-icon-24.png) 5px center no-repeat;
+  }

@@ -11,6 +11,10 @@ var Zip = require('../libs/zip.js');
 var Controls = React.createClass({
   /*jshint ignore:start */
 
+  showFilterMenu: function(){
+
+  },
+
   setFilter: function(event){
     event.preventDefault();
 
@@ -35,9 +39,17 @@ var Controls = React.createClass({
     return (
         <div className="controls">
             <ul>
-              <li><button onClick={this.zipPhotos} >Download as zip</button></li>
-              <li><button>Double size</button></li>
-              <li><button onClick={this.setFilter} >set filter</button></li>
+              <li className="control"><button className="zip" onClick={this.zipPhotos} >Download as zip</button></li>
+              <li className="control"><button className="resize">Double size</button></li>
+              <li className="control">
+                <button className="filter" onClick={this.showFilterMenu}>Palette</button>
+                <select className="filter" onChange={this.setFilter}>
+                    <option selected="selected" disabled="disabled">Set filter</option>
+                    <option>Red</option>
+                    <option>Gameboy</option>
+                    <option>Silver</option>
+                </select>
+              </li>
             </ul>
         </div>
       )
