@@ -17,7 +17,7 @@ var About = React.createClass({
               </aside>
               <main className="instructions block">
                 <h1>Using this site</h1>
-                <p class="lead">This site will extract photos from your Gameboy Save File</p>
+                <p className="lead">This site will extract photos from your Gameboy Save File</p>
                 <p>To use it, you&rsquo;ll need a .sav file from your Gameboy Camera. If you don&rsquo;t have one yet, skip down to the <a href="#why">How</a> section.</p>
               </main>
               <aside className="hero block illustration">

@@ -17,15 +17,17 @@ var Photo = React.createClass({
   getInitialState: function(){
     var photo = Photos.get(this.props.photo);
 
-    photo.onFilterChange = this.doFilter.bind(this);
-    photo.onUndo = this.doUndo.bind(this);
-    photo.onResize = this.doResize.bind(this);
+    photo.onFilterChange = this.doFilter;
+    photo.onUndo = this.doUndo;
+    photo.onResize = this.doResize;
+    photo.onDelete = this.delete;
 
     return {
-        photo: photo,
-        width: 128,
-        height: 112,
-        scale: 1
+      photo: photo,
+      width: 128,
+      height: 112,
+      scale: 1,
+      selected: false
     };
   },
 
@@ -81,7 +83,7 @@ var Photo = React.createClass({
         this.getContext();
         this.context.drawImage(image, 0, 0, this.getWidth(), this.getHeight());
       }.bind(this);
-    } else if (typeof this.state.photos.pixels !== 'undefined' && this.state.photos.pixels.length > 0) {
+    } else if (typeof this.state.photo.pixels !== 'undefined' && this.state.photo.pixels.length > 0) {
 
       this.state.photo.pixels.map(this.drawPixel);
       this.state.photo.setImageData(this.getImageData());
@@ -93,10 +95,19 @@ var Photo = React.createClass({
       this.context.fillRect( (pixel.x * this.state.scale), (pixel.y * this.state.scale), this.state.scale, this.state.scale );
   },
 
+  selectPhoto: function(){
+    var selected = !this.state.selected;
+    this.setState({
+      selected: selected
+    });
+
+    this.state.photo.isSelected(selected);
+  },
+
   /*jshint ignore:start */
   render: function () {
     return (
-        <canvas rel={this.state.photo.id} width={this.getWidth()} height={this.getHeight()}>
+        <canvas className={(this.state.selected)? 'selected' : ''} onClick={this.selectPhoto} rel={this.state.photo.id} width={this.getWidth()} height={this.getHeight()}>
         </canvas>
       )
   }

@@ -1,15 +1,4 @@
-var filter = function (pixels, args) {
-  var d = pixels.data;
-  for (var i = 0; i < d.length; i += 4) {
-    var r = d[i];
-    var g = d[i + 1];
-    var b = d[i + 2];
-    d[i]     = (r * 0.393)+(g * 0.769)+(b * 0.189); // red
-    d[i + 1] = (r * 0.349)+(g * 0.686)+(b * 0.168); // green
-    d[i + 2] = (r * 0.272)+(g * 0.534)+(b * 0.131); // blue
-  }
-  return pixels;
-}
+var uuid = require('node-uuid');
 
 function PhotoStore(){
   this._photos = [];
@@ -23,9 +12,10 @@ function PhotoStore(){
 
 PhotoStore.prototype.add = function(pixels){
   var photo = {
-    id: this._photos.length,
+    id: uuid.v4(),
     pixels: pixels,
     _imageData: [],
+    selected: false
   };
 
   this.decoratePhoto(photo);
@@ -36,12 +26,36 @@ PhotoStore.prototype.add = function(pixels){
   return photo.id;
 };
 
-PhotoStore.prototype.get = function(id) {
-  if (typeof id !== 'undefined'){
-    return this._photos[id];
+PhotoStore.prototype.getSelectedOrEverything = function(){
+  var filtered = this._photos.filter(function(photo){
+    return (photo.selected === true);
+  });
+
+  if (filtered.length > 0){
+    return filtered;
   } else {
     return this._photos;
   }
+};
+
+PhotoStore.prototype.get = function(id) {
+  if (typeof id !== 'undefined'){
+    var selected = this._photos.filter(function(photo){
+      return (photo.id === id);
+    });
+
+    if (selected.length === 1) {
+      return selected[0];
+    } else {
+      return false;
+    }
+  } else {
+    return this._photos;
+  }
+};
+
+PhotoStore.prototype.remove = function(id, i){
+  this._photos.splice(i, 1);
 };
 
 PhotoStore.prototype.save = function(id) {
@@ -73,7 +87,7 @@ PhotoStore.prototype.restore = function(id) {
 };
 
 PhotoStore.prototype.undo = function() {
-  this._photos.map(function(photo){
+  this.getSelectedOrEverything().map(function(photo){
     photo.undo();
   });
 
@@ -81,17 +95,33 @@ PhotoStore.prototype.undo = function() {
 };
 
 PhotoStore.prototype.resize = function(scale) {
-  this._photos.map(function(photo){
+  this.getSelectedOrEverything().map(function(photo){
     photo.resize(scale);
   });
 
   this.save();
 };
 
-PhotoStore.prototype.setFilter = function(/*filter*/) {
-  this._photos.map(function(photo){
-    photo.filter(filter);
+PhotoStore.prototype.setFilter = function(filter) {
+  this.getSelectedOrEverything().map(function(photo){
+    if (photo.selected === true) {
+      photo.filter(filter);
+    }
   });
+
+  this.save();
+};
+
+PhotoStore.prototype.delete = function() {
+  var temp = this._photos.slice(0);
+
+  this._photos = this._photos.filter(function(photo){
+    return (photo.selected !== true);
+  });
+
+  if (typeof this.onDelete !== 'undefined'){
+    this.onDelete();
+  }
 
   this.save();
 };
@@ -141,6 +171,10 @@ PhotoStore.prototype.decoratePhoto = function(photo){
     if (typeof this.onResize !== 'undefined'){
       this.onResize(scale);
     }
+  };
+
+  photo.isSelected = function(selected){
+    this.selected = selected;
   };
 
   return photo;

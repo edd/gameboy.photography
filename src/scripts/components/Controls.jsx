@@ -8,6 +8,7 @@ var React = require('react/addons');
 require('../../styles/Controls.css');
 var Zip = require('../libs/zip.js');
 var Photos = require('../libs/photoStore.js');
+var Paletteselector = require('./Paletteselector.jsx');
 
 var Controls = React.createClass({
   /*jshint ignore:start */
@@ -16,16 +17,6 @@ var Controls = React.createClass({
     return {
       scale: 2
     }
-  },
-
-  showFilterMenu: function(){
-
-  },
-
-  setFilter: function(event){
-    event.preventDefault();
-
-    Photos.setFilter();
   },
 
   resize: function(event){
@@ -54,22 +45,19 @@ var Controls = React.createClass({
     Photos.undo();
   },
 
+  delete: function(){
+    Photos.delete();
+  },
+
   render: function () {
     return (
         <div className="controls">
             <ul>
               <li className="control"><button className="zip" onClick={this.zipPhotos} >Download as zip</button></li>
               <li className="control"><button className="resize" onClick={this.resize} >Embiggen {this.state.scale}x</button></li>
-              <li className="control">
-                <button className="filter" onClick={this.setFilter}>Palette</button>
-                <select className="filter" onChange={this.setFilter}>
-                    <option selected="selected" disabled="disabled">Set filter</option>
-                    <option>Red</option>
-                    <option>Gameboy</option>
-                    <option>Silver</option>
-                </select>
-              </li>
+              <li className="control"><Paletteselector /></li>
               <li className="control"><button className="undo" onClick={this.undo}>Undo</button></li>
+              <li className="control"><button className="delete" onClick={this.delete}>Delete</button></li>
             </ul>
         </div>
       )
@@ -77,4 +65,14 @@ var Controls = React.createClass({
   /*jshint ignore:end */
 });
 
+/*
+ <button className="filter" onClick={this.setFilter}>Palette</button>
+ <select className="filter" onChange={this.setFilter}>
+ <option selected="selected" disabled="disabled">Set filter</option>
+ <option>Red</option>
+ <option>Gameboy</option>
+ <option>Silver</option>
+ </select>
+
+ */
 module.exports = Controls;

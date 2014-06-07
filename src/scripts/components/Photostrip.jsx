@@ -4,9 +4,10 @@
 
 'use strict';
 
+require('../../styles/Photostrip.css');
+
 var React = require('react/addons');
 var Photo = require('./Photo.jsx');
-require('../../styles/Photostrip.css');
 
 var Photostrip = React.createClass({
   /*jshint ignore:start */

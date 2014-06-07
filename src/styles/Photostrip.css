@@ -1,5 +1,6 @@
 .photoList{
   float: left;
+  margin-top: 80px;
 }
 
 .photoList .photo{

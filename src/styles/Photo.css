@@ -1,4 +1,13 @@
 .photo{
-    display: flex;
-    flex-shrink: 0;
+  display: flex;
+  flex-shrink: 0;
+  transform: opacity 0.2s ease;
+}
+
+.photo canvas{
+  border: 2px solid transparent;
+}
+
+.photo .selected{
+  border: 2px solid #FFDC3B;
 }

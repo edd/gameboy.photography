@@ -28,10 +28,16 @@ var states = {
 
 var GameboyphotographyApp = React.createClass({
   getInitialState: function(){
+    Photos.onDelete = this.updatedPhotos;
+
     return {
-      currentPhotoIndex: false,
+      photos: Photos,
       status: (Photos.length === 0) ? states.HOME : states.UPLOADED
     }
+  },
+
+  updatedPhotos: function(){
+    this.setState({photos: Photos})
   },
 
   parsePhotos: function(files){
@@ -42,19 +48,6 @@ var GameboyphotographyApp = React.createClass({
 
   addPhoto: function(photo){
     Photos.add(photo);
-
-    if (Photos.length === 1){
-
-      this.setState({
-        currentPhotoIndex: 0,
-      });
-    }
-  },
-
-  selectPhoto: function(photoIndex){
-      this.setState({
-          currentPhotoIndex: photoIndex
-      });
   },
 
   onCompleteUpload: function(){
@@ -89,24 +82,22 @@ var GameboyphotographyApp = React.createClass({
     if (this.state.status === states.UPLOADED) {
       document.documentElement.className='processing';
         return (
-            <div className='container'>
+            <div className='container' onDragOver={this.onDragOver} onDragLeave={this.onDragLeave} onDrop={this.onDrop}>
                 <Controls></Controls>
-                <Photostrip selectPhoto={this.selectPhoto}
-                  photos={Photos}
-                  currentPhotoIndex={this.state.currentPhotoIndex}>
-                </Photostrip>
+                <Photostrip photos={this.state.photos}></Photostrip>
+              <SaveFileUpload photoParser={this.parsePhotos}></SaveFileUpload>
             </div>
         );
     } else {
       document.documentElement.className='home';
 
-      return (
-            <div className={this.state.status + ' main'} onDragOver={this.onDragOver} onDragLeave={this.onDragLeave} onDrop={this.onDrop}>
-                <SaveFileUpload photoParser={this.parsePhotos}></SaveFileUpload>
-                <About></About>
-            </div>
-        );
     }
+    return (
+        <div className={this.state.status + ' main'} onDragOver={this.onDragOver} onDragLeave={this.onDragLeave} onDrop={this.onDrop}>
+          <SaveFileUpload photoParser={this.parsePhotos}></SaveFileUpload>
+          <About></About>
+        </div>
+        );
   }
   /*jshint ignore:end */
 });
