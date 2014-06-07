@@ -1,6 +1,6 @@
 //var colourBuffers = [[255, 255, 255, 255],  [85, 85, 85, 255], [170, 170, 170, 255], [0, 0, 0, 255]];
 
-module.exports = function (pixels, args) {
+module.exports = function (pixels, callback) {
   var d = pixels.data;
   for (var i = 0; i < d.length; i += 4) {
     var r = d[i];
@@ -26,5 +26,5 @@ module.exports = function (pixels, args) {
     }
   }
 
-  return pixels;
+  callback(pixels);
 };

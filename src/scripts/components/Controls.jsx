@@ -53,12 +53,11 @@ var Controls = React.createClass({
     return (
         <div className="controls">
             <ul>
-              <li className="control"><button className="zip" onClick={this.zipPhotos} >Download as zip</button></li>
-              <li className="control"><button className="resize" onClick={this.resize} >Embiggen {this.state.scale}x</button></li>
-              <li className="control"><Paletteselector /></li>
-              <li className="control"><button className="undo" onClick={this.undo}>Undo</button></li>
-              <li className="control"><button className="delete" onClick={this.delete}>Delete</button></li>
-              <li className="control right"><button className="settings" onClick={this.showSettings}>Settings</button></li>
+              <li className="control"><button className="zip" onClick={this.zipPhotos} ><span>Download as zip</span></button></li>
+              <li className="control"><button className="resize" onClick={this.resize} ><span>Embiggen {this.state.scale}x</span></button></li>
+              <Paletteselector />
+              <li className="control"><button className="delete" onClick={this.delete}><span>Delete</span></button></li>
+              <li className="control right"><button className="settings" onClick={this.showSettings}><span>Settings</span></button></li>
             </ul>
         </div>
       )
@@ -67,6 +66,7 @@ var Controls = React.createClass({
 });
 
 /*
+ <li className="control"><button className="undo" onClick={this.undo}><span>Undo</span></button></li>
  <button className="filter" onClick={this.setFilter}>Palette</button>
  <select className="filter" onChange={this.setFilter}>
  <option selected="selected" disabled="disabled">Set filter</option>

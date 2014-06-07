@@ -1,4 +1,3 @@
-var uuid = require('node-uuid');
 
 function PhotoStore(){
   this._photos = [];
@@ -10,9 +9,21 @@ function PhotoStore(){
   return this;
 };
 
+PhotoStore.prototype.getGuid = (function() {
+  function s4() {
+    return Math.floor((1 + Math.random()) * 0x10000)
+        .toString(16)
+        .substring(1);
+  }
+  return function() {
+    return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+        s4() + '-' + s4() + s4() + s4();
+  };
+})();
+
 PhotoStore.prototype.add = function(pixels){
   var photo = {
-    id: uuid.v4(),
+    id: this.getGuid(),
     pixels: pixels,
     _imageData: [],
     selected: false
@@ -104,7 +115,11 @@ PhotoStore.prototype.resize = function(scale) {
 
 PhotoStore.prototype.setFilter = function(filter) {
   this.getSelectedOrEverything().map(function(photo){
-    photo.filter(filter);
+    if (typeof filter === 'function') {
+      photo.filter(filter);
+    } else {
+      photo.undo();
+    }
   });
 
   this.save();

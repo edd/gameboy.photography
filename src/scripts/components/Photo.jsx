@@ -59,9 +59,10 @@ var Photo = React.createClass({
   doFilter: function(filter){
      this.getContext();
 
-     var imageData = filter(this.context.getImageData(0, 0, this.getWidth(), this.getHeight()));
-     this.context.putImageData(imageData, 0, 0);
-     this.state.photo.setImageData(this.getImageData());
+     filter(this.context.getImageData(0, 0, this.getWidth(), this.getHeight()), function(imageData){
+       this.context.putImageData(imageData, 0, 0);
+       this.state.photo.setImageData(this.getImageData());
+     }.bind(this));
   },
 
   doUndo: function(){

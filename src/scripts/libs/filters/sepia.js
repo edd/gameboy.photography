@@ -1,4 +1,4 @@
-module.exports = function (pixels, args) {
+module.exports = function (pixels, callback) {
   var d = pixels.data;
   for (var i = 0; i < d.length; i += 4) {
     var r = d[i];
@@ -8,5 +8,5 @@ module.exports = function (pixels, args) {
     d[i + 1] = (r * 0.349)+(g * 0.686)+(b * 0.168); // green
     d[i + 2] = (r * 0.272)+(g * 0.534)+(b * 0.131); // blue
   }
-  return pixels;
+  callback(pixels);
 };
