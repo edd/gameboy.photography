@@ -11,9 +11,13 @@ require('../../styles/Photostrip.css');
 var Photostrip = React.createClass({
   /*jshint ignore:start */
 
+  componentDidMount: function(){
+    this.props.photos.save();
+  },
+
   render: function () {
-    var photoNodes = this.props.photos.map(function (photo) {
-      return <li key={photo.id} className="photo"><Photo filter={this.props.filter} photo={photo}></Photo></li>;
+    var photoNodes = this.props.photos.get().map(function (photo) {
+      return <li key={photo.id} className="photo"><Photo filter={this.props.filter} photo={photo.id}></Photo></li>;
     }.bind(this));
 
     return (

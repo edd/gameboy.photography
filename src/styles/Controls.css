@@ -10,9 +10,9 @@
     margin: 0;
   }
 
-.controls.hidden{
+  .controls.hidden{
     display: none;
-}
+  }
 
   .controls button{
     background: #FFF2A0;
@@ -41,6 +41,14 @@
 
   .controls .zip{
     background: #FFF2A0 url(../images/iconmonstr-zip-9-icon-24.png) 5px center no-repeat;
+  }
+
+  .controls .undo{
+    background: #FFF2A0 url(../images/iconmonstr-undo-5-icon-24.png) 5px center no-repeat;
+  }
+
+  .controls .resize{
+    background: #FFF2A0 url(../images/iconmonstr-resize-10-icon-24.png) 5px center no-repeat;
   }
 
   .controls .filter{

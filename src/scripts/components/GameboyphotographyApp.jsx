@@ -12,6 +12,7 @@ var SaveFileUpload = require('./SaveFileUpload.jsx');
 var Controls = require('./Controls.jsx');
 var GBCDump = require('../libs/gbcdump.js');
 var About = require('./About.jsx');
+var Photos = require('../libs/photoStore');
 
 // CSS
 require('../../styles/reset.css');
@@ -29,10 +30,7 @@ var GameboyphotographyApp = React.createClass({
   getInitialState: function(){
     return {
       currentPhotoIndex: false,
-      currentPhoto: false,
-      photos: [],
-      status: states.HOME,
-      filter: false
+      status: (Photos.length === 0) ? states.HOME : states.UPLOADED
     }
   },
 
@@ -43,28 +41,19 @@ var GameboyphotographyApp = React.createClass({
   },
 
   addPhoto: function(photo){
-    var newPhotos = this.state.photos,
-        newState;
+    Photos.add(photo);
 
-    photo.id = this.state.photos.length;
+    if (Photos.length === 1){
 
-    newPhotos.push(photo);
-    newState = {
-          photos: newPhotos
-    };
-
-    if (this.state.photos.length === 1){
-        newState.currentPhotoIndex = 0;
-        newState.currentPhoto = newPhotos[0];
+      this.setState({
+        currentPhotoIndex: 0,
+      });
     }
-
-    this.setState(newState);
   },
 
   selectPhoto: function(photoIndex){
       this.setState({
-          currentPhotoIndex: photoIndex,
-          currentPhoto: this.state.photos[photoIndex]
+          currentPhotoIndex: photoIndex
       });
   },
 
@@ -95,34 +84,16 @@ var GameboyphotographyApp = React.createClass({
     return false;
   },
 
-  setFilter: function(){
-    this.setState({
-      filter: function (pixels, args) {
-        var d = pixels.data;
-        for (var i = 0; i < d.length; i += 4) {
-          var r = d[i];
-          var g = d[i + 1];
-          var b = d[i + 2];
-          d[i]     = (r * 0.393)+(g * 0.769)+(b * 0.189); // red
-          d[i + 1] = (r * 0.349)+(g * 0.686)+(b * 0.168); // green
-          d[i + 2] = (r * 0.272)+(g * 0.534)+(b * 0.131); // blue
-        }
-        return pixels;
-      }
-    });
-  },
-
   /*jshint ignore:start */
   render: function() {
     if (this.state.status === states.UPLOADED) {
       document.documentElement.className='processing';
         return (
             <div className='container'>
-                <Controls setFilter={this.setFilter}></Controls>
+                <Controls></Controls>
                 <Photostrip selectPhoto={this.selectPhoto}
-                currentPhotoIndex={this.state.currentPhotoIndex}
-                photos={this.state.photos}
-                filter={this.state.filter}>
+                  photos={Photos}
+                  currentPhotoIndex={this.state.currentPhotoIndex}>
                 </Photostrip>
             </div>
         );

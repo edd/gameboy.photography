@@ -63,7 +63,7 @@ GBCDump.prototype.parsePhotos = function parsePhotos(){
       }
     }
 
-    callback({pixels: photoResult});
+    callback(photoResult);
   }
 
   didCompleteCallback();

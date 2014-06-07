@@ -8,33 +8,33 @@
 
 var React = require('react/addons');
 require('../../styles/Photo.css');
+var Photos = require('../libs/photoStore');
 
 var Photo = React.createClass({
   context: false,
   hasMounted: false,
-  propTypes: {
-    optionalNumber: React.PropTypes.number
-  },
-
-  getDefaultProps: function(){
-    return {
-      scale: 1
-    };
-  },
 
   getInitialState: function(){
+    var photo = Photos.get(this.props.photo);
+
+    photo.onFilterChange = this.doFilter.bind(this);
+    photo.onUndo = this.doUndo.bind(this);
+    photo.onResize = this.doResize.bind(this);
+
     return {
+        photo: photo,
         width: 128,
-        height: 112
+        height: 112,
+        scale: 1
     };
   },
 
   getWidth: function(){
-    return this.state.width * this.props.scale;
+    return this.state.width * this.state.scale;
   },
 
   getHeight: function(){
-    return this.state.height * this.props.scale;
+    return this.state.height * this.state.scale;
   },
 
   getImageData: function(){
@@ -46,38 +46,57 @@ var Photo = React.createClass({
     this.drawPhoto();
   },
 
-  shouldComponentUpdate: function(nextProps, nextState){
-    if (nextProps.filter !== this.props.filter
-          && typeof nextProps.filter === 'function' ){
-        this.getContext();
+  doResize: function(newScale){
+    this.setState({
+      scale: newScale
+    });
 
-       var imageData = nextProps.filter(this.context.getImageData(0, 0, this.getWidth(), this.getHeight()));
-       this.context.putImageData(imageData, 0, 0);
-    }
+    this.drawPhoto();
+  },
 
-    return false;
+  doFilter: function(filter){
+     this.getContext();
+
+     var imageData = filter(this.context.getImageData(0, 0, this.getWidth(), this.getHeight()));
+     this.context.putImageData(imageData, 0, 0);
+     this.state.photo.setImageData(this.getImageData());
+  },
+
+  doUndo: function(){
+     this.drawPhoto();
   },
 
   getContext: function(){
-      this.context = this.getDOMNode().getContext('2d');
-      this.context.imageSmoothingEnabled = false;
-      this.context.webkitImageSmoothingEnabled = false;
+    this.context = this.getDOMNode().getContext('2d');
+    this.context.imageSmoothingEnabled = false;
+    this.context.webkitImageSmoothingEnabled = false;
   },
 
   drawPhoto: function(){
-      this.props.photo.pixels.map(this.drawPixel);
+    var imageData = this.state.photo.getImageData();
+    if (imageData !== false){
+      var image = new Image();
+      image.src = imageData;
+      image.onload = function () {
+        this.getContext();
+        this.context.drawImage(image, 0, 0, this.getWidth(), this.getHeight());
+      }.bind(this);
+    } else if (typeof this.state.photos.pixels !== 'undefined' && this.state.photos.pixels.length > 0) {
 
+      this.state.photo.pixels.map(this.drawPixel);
+      this.state.photo.setImageData(this.getImageData());
+    }
   },
 
   drawPixel: function(pixel){
       this.context.fillStyle = "rgba("+pixel.colour[0]+","+pixel.colour[1]+","+pixel.colour[2]+","+pixel.colour[3]+")";
-      this.context.fillRect( (pixel.x * this.props.scale), (pixel.y * this.props.scale), this.props.scale, this.props.scale );
+      this.context.fillRect( (pixel.x * this.state.scale), (pixel.y * this.state.scale), this.state.scale, this.state.scale );
   },
 
-    /*jshint ignore:start */
+  /*jshint ignore:start */
   render: function () {
     return (
-        <canvas rel={this.props.photo.id} width={this.getWidth()} height={this.getHeight()}>
+        <canvas rel={this.state.photo.id} width={this.getWidth()} height={this.getHeight()}>
         </canvas>
       )
   }
