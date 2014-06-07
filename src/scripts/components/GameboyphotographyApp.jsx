@@ -13,6 +13,7 @@ var Controls = require('./Controls.jsx');
 var GBCDump = require('../libs/gbcdump.js');
 var About = require('./About.jsx');
 var Photos = require('../libs/photoStore');
+var Flasherror = require('./Flasherror.jsx');
 
 // CSS
 require('../../styles/reset.css');
@@ -32,7 +33,8 @@ var GameboyphotographyApp = React.createClass({
 
     return {
       photos: Photos,
-      status: (Photos.length === 0) ? states.HOME : states.UPLOADED
+      status: (Photos.length === 0) ? states.HOME : states.UPLOADED,
+      flashError: false
     }
   },
 
@@ -43,7 +45,7 @@ var GameboyphotographyApp = React.createClass({
   parsePhotos: function(files){
     this.setState({status: states.UPLOADING});
 
-    GBCDump.open(files, this.addPhoto, this.onCompleteUpload);
+    GBCDump.open(files, this.addPhoto, this.onCompleteUpload, this.onDropError);
   },
 
   addPhoto: function(photo){
@@ -68,13 +70,34 @@ var GameboyphotographyApp = React.createClass({
       this.getDOMNode().classList.remove('peek');
   },
 
-  onDrop: function(event){
+
+  onDrop: function(event) {
     this.setState({
-        uploadTargetClassname: 'uploadTarget uploading'
+      uploadTargetClassname: 'uploadTarget uploading'
     });
 
-    this.parsePhotos(event.dataTransfer.files);
+
+    if (event.dataTransfer.files[0].name.indexOf('.sav') != -1){
+      this.parsePhotos(event.dataTransfer.files);
+    } else {
+      this.onDropError('File must be a Gameboy save file (.sav)');
+    }
+
     return false;
+  },
+
+  onDropError: function(errorString){
+    this.setState({
+      flashError: errorString
+    });
+
+    this.getDOMNode().classList.remove('peek');
+  },
+
+  clearError: function(){
+    this.setState({
+      flashError: false
+    });
   },
 
   /*jshint ignore:start */
@@ -84,6 +107,7 @@ var GameboyphotographyApp = React.createClass({
         return (
             <div className='container' onDragOver={this.onDragOver} onDragLeave={this.onDragLeave} onDrop={this.onDrop}>
                 <Controls></Controls>
+                <Flasherror error={this.state.flashError} clearError={this.clearError}></Flasherror>
                 <Photostrip photos={this.state.photos}></Photostrip>
               <SaveFileUpload photoParser={this.parsePhotos}></SaveFileUpload>
             </div>
@@ -94,10 +118,11 @@ var GameboyphotographyApp = React.createClass({
     }
     return (
         <div className={this.state.status + ' main'} onDragOver={this.onDragOver} onDragLeave={this.onDragLeave} onDrop={this.onDrop}>
+          <Flasherror error={this.state.flashError} clearError={this.clearError}></Flasherror>
           <SaveFileUpload photoParser={this.parsePhotos}></SaveFileUpload>
           <About></About>
         </div>
-        );
+     );
   }
   /*jshint ignore:end */
 });

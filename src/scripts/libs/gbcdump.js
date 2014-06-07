@@ -14,25 +14,51 @@ function stringToHex(string){
 
     return hex;
 }
+function validateFile(saveFile){
+  var TEST_STRING = 'Magic';
+
+  // test Photos
+  for (var i = 0x2FB1; i < 0x1FFB1; i += 0x1000){
+    var buffer = saveFile.slice(i, i + 5);
+
+    if (buffer.length !== TEST_STRING.length ||
+        buffer.toString() !== TEST_STRING){
+
+      return false;
+    }
+  }
+
+  return true;
+}
+
 
 var GBCDump = function(files){
   this.fr = new FileReader();
 
   return this;
-}
+};
 
 var callback,
     didCompleteCallback;
 
-GBCDump.prototype.open = function open(files, photoCallback, completeCallback){
+GBCDump.prototype.open = function open(files, photoCallback, completeCallback, errorCallback){
   callback = photoCallback;
   didCompleteCallback = completeCallback;
 
   this.fr.onloadend = this.parsePhotos;
+
   this.fr.readAsBinaryString(files[0]);
-}
+};
 
 GBCDump.prototype.parsePhotos = function parsePhotos(){
+  if (validateFile(this.result) === false){
+    if (typeof errorCallback !== 'undefined') {
+      errorCallback('Invalid save file');
+    }
+
+    return false;
+  }
+
   for (var i = 0; i<TOTAL_PHOTOS; i++){
     var start = 0x2000 + (i * 0x1000),
         photoResult = [];
@@ -67,7 +93,6 @@ GBCDump.prototype.parsePhotos = function parsePhotos(){
   }
 
   didCompleteCallback();
-}
-
+};
 
 module.exports= new GBCDump();

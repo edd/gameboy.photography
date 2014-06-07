@@ -58,6 +58,7 @@ var Controls = React.createClass({
               <li className="control"><Paletteselector /></li>
               <li className="control"><button className="undo" onClick={this.undo}>Undo</button></li>
               <li className="control"><button className="delete" onClick={this.delete}>Delete</button></li>
+              <li className="control right"><button className="settings" onClick={this.showSettings}>Settings</button></li>
             </ul>
         </div>
       )

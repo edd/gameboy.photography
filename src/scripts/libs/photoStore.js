@@ -104,9 +104,7 @@ PhotoStore.prototype.resize = function(scale) {
 
 PhotoStore.prototype.setFilter = function(filter) {
   this.getSelectedOrEverything().map(function(photo){
-    if (photo.selected === true) {
-      photo.filter(filter);
-    }
+    photo.filter(filter);
   });
 
   this.save();

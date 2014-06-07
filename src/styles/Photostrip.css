@@ -1,6 +1,10 @@
 .photoList{
   float: left;
   margin-top: 80px;
+
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
 }
 
 .photoList .photo{

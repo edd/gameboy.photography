@@ -1,14 +1,18 @@
 .controls{
-    position: fixed;
-    box-sizing: border-box;
-    background: #FFDC3B;
-    width: 100%;
-    margin: 0 0 10px 0;
-    padding: 10px;
+  position: fixed;
+  box-sizing: border-box;
+  background: #FFDC3B;
+  width: 100%;
+  margin: 0;
+  padding: 10px;
 }
   .controls ul{
     padding: 0;
     margin: 0;
+  }
+
+  .right{
+    float: right;
   }
 
   .controls.hidden{
@@ -57,4 +61,8 @@
 
   .controls .delete{
     background: #FFF2A0 url(../images/iconmonstr-x-mark-3-icon-24.png) 5px center no-repeat;
+  }
+
+  .controls .settings{
+    background: #FFF2A0 url(../images/iconmonstr-tools-2-icon-24.png) 5px center no-repeat;
   }
