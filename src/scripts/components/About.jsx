@@ -12,8 +12,12 @@ var About = React.createClass({
   render: function () {
         return (
             <div className="about">
-              <aside className="hero block">
-                  <p>hero</p>
+              <aside className="tophero">
+                  <img src="images/home/hero.webp" width="1366" height="768" />
+                  <div className="lead">
+                    <h1>Thinger</h1>
+                    <p>Upload your Gameboy Camera photos</p>
+                   </div>
               </aside>
               <main className="instructions block">
                 <h1>Using this site</h1>
@@ -25,12 +29,19 @@ var About = React.createClass({
                   <li><img src="../images/h-1.png" alt="" /></li>
                   <li><img src="../images/h-2.png" alt="" /></li>
                   <li><img src="../images/h-3.png" alt="" /></li>
-                  <li><img src="../images/h-4.png" alt="" /></li>
                 </ul>
               </aside>
               <main className="instructions block">
                 <h2>How?</h2>
-                <p>Morbi fermentum, odio sit amet feugiat auctor, odio ligula aliquam augue, non venenatis tellus mi vel nibh. Vestibulum cursus orci vitae orci vulputate, quis malesuada arcu posuere. Vestibulum nunc est, vestibulum nec gravida at, elementum quis eros. Integer porta convallis nisi. Vestibulum vitae turpis vitae leo elementum bibendum eu in lorem. Donec consectetur sapien ut justo ultricies hendrerit. Fusce quis auctor nisi. Duis nisl lacus, dictum eu tempus ac, gravida quis massa. Proin eros neque, fringilla vitae bibendum varius, congue vitae massa. Mauris adipiscing elementum fringilla. In placerat sapien massa, id pellentesque sem venenatis et.</p>
+                <p>The hard bit is getting the save file off your Gameboy Cartridge.</p>
+                <h3>USB Cartridge reader</h3>
+                <p>This is the best way &rsquo; with a caveat, that they're a bit hard to get hold of. There's the <a href="http://www.gameboycarts.com/2009/11/smartboy-32-mb-flash-cart-review/">Smartboy cartridge reader</a>. There was the Bleep Bloop programmer.</p>
+                <p><a href="http://store.kitsch-bent.com/category/cartridges-programmers">Kitsch Bent</a> is a good place to keep an eye out for progammers in the future. Failing that, uh, eBay?</p>
+                <h3>Official Gameboy Printer</h3>
+                <p>You could simply use the official printer to print off the photos, and scan them in.</p>
+                <h3>Madcatz Camera Link</h3>
+                <p>If you still have a PC with a parallel port and Windows 95, The Madcatz camera link is the product for you. Simply plug the cable in to your Gameboy link port, the other end in to your PC, and the software emulates the Gameboy Printer.</p>
+                <p>Doing it this way does get you the olde official borders for free, but otherwise &mdash; man, it&rsquo;s a lot of hassle.</p>
               </main>
               <aside className="hero block illustration">
 
