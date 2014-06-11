@@ -1,3 +1,4 @@
+var events = require('events');
 
 function PhotoStore(){
   this._photos = [];
@@ -8,6 +9,8 @@ function PhotoStore(){
 
   return this;
 };
+
+PhotoStore.prototype = new events.EventEmitter;
 
 PhotoStore.prototype.getGuid = (function() {
   function s4() {
@@ -81,6 +84,8 @@ PhotoStore.prototype.save = function(id) {
   });
 
   window.localStorage.photos = JSON.stringify(photos);
+
+  this.emit('saved');
 };
 
 PhotoStore.prototype.restore = function(id) {
@@ -91,6 +96,8 @@ PhotoStore.prototype.restore = function(id) {
       return this.decoratePhoto(photo);
     }.bind(this));
 
+    this.emit('restored');
+
     return true;
   }
 
@@ -100,7 +107,9 @@ PhotoStore.prototype.restore = function(id) {
 PhotoStore.prototype.undo = function() {
   this.getSelectedOrEverything().map(function(photo){
     photo.undo();
-  });
+
+    this.emit('undo', photo);
+  }.bind(this));
 
   this.save();
 };
@@ -108,7 +117,9 @@ PhotoStore.prototype.undo = function() {
 PhotoStore.prototype.resize = function(scale) {
   this.getSelectedOrEverything().map(function(photo){
     photo.resize(scale);
-  });
+
+    this.emit('resized', photo);
+  }.bind(this));
 
   this.save();
 };
@@ -139,7 +150,22 @@ PhotoStore.prototype.delete = function() {
   this.save();
 };
 
+PhotoStore.prototype.selectedItem = function(photo, isSelected) {
+  var selectedItems= this.getSelectedOrEverything();
+
+  if (selectedItems == this._photos){
+    this.emit('noselection');
+
+    return false;
+  } else {
+    this.emit('selected', photo);
+
+    return true;
+  }
+};
+
 PhotoStore.prototype.decoratePhoto = function(photo){
+  var self = this;
 
   photo.setImageData = function(imageData){
     this._imageData.push(imageData);
@@ -188,6 +214,8 @@ PhotoStore.prototype.decoratePhoto = function(photo){
 
   photo.isSelected = function(selected){
     this.selected = selected;
+
+    self.selectedItem(photo, selected);
   };
 
   return photo;

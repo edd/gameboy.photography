@@ -85,3 +85,12 @@
 .about .gallery img{
   border: 3px solid #FFEE00;
 }
+
+.retrieval img{
+  float: left;
+  margin: 0 10px 0 0;
+}
+
+.retrieval{
+  clear: both;
+}

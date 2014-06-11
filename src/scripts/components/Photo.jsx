@@ -14,6 +14,12 @@ var Photo = React.createClass({
   context: false,
   hasMounted: false,
 
+  propTypes: {
+    selectable: React.PropTypes.bool.isRequired,      // True if clicking should select it
+    photo: React.PropTypes.string.isRequired,          // UID of photo for this canvas
+    onClick: React.PropTypes.func
+  },
+
   getInitialState: function(){
     var photo = Photos.get(this.props.photo);
 
@@ -27,7 +33,7 @@ var Photo = React.createClass({
       width: 128,
       height: 112,
       scale: 1,
-      selected: false
+      selected: this.props.selectable && photo.selected
     };
   },
 
@@ -96,13 +102,17 @@ var Photo = React.createClass({
       this.context.fillRect( (pixel.x * this.state.scale), (pixel.y * this.state.scale), this.state.scale, this.state.scale );
   },
 
-  selectPhoto: function(){
-    var selected = !this.state.selected;
-    this.setState({
-      selected: selected
-    });
+  selectPhoto: function(event){
+    event.preventDefault();
 
-    this.state.photo.isSelected(selected);
+    if (this.props.selectable === true) {
+      var selected = !this.state.selected;
+      this.setState({
+        selected: selected
+      });
+
+      this.state.photo.isSelected(selected);
+    }
   },
 
   /*jshint ignore:start */

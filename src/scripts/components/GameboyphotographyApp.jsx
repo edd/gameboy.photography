@@ -14,6 +14,8 @@ var GBCDump = require('../libs/gbcdump.js');
 var About = require('./About.jsx');
 var Photos = require('../libs/photoStore');
 var Flasherror = require('./Flasherror.jsx');
+var states = require('../libs/states');
+var Animationstrip = require('./Animationstrip.jsx');
 
 // CSS
 require('../../styles/reset.css');
@@ -21,21 +23,29 @@ require('../../styles/main.css');
 
 var imageURL = '../../images/yeoman.png';
 
-var states = {
-    HOME: 'home',
-    UPLOADING: 'uploading',
-    UPLOADED: 'uploaded'
-};
+
 
 var GameboyphotographyApp = React.createClass({
   getInitialState: function(){
     Photos.onDelete = this.updatedPhotos;
 
+    Photos.on('selected', this.itemsAreSelected);
+    Photos.on('noselection', this.noItemsAreSelected);
+
     return {
       photos: Photos,
       status: (Photos.length === 0) ? states.HOME : states.UPLOADED,
-      flashError: false
+      flashError: false,
+      selected: false
     }
+  },
+
+  itemsAreSelected: function (){
+    this.setState({selected: true});
+  },
+
+  noItemsAreSelected: function (){
+    this.setState({selected: false});
   },
 
   updatedPhotos: function(){
@@ -100,18 +110,36 @@ var GameboyphotographyApp = React.createClass({
     });
   },
 
+  changeState: function(newState){
+    this.setState({
+      status: newState
+    });
+  },
+
   /*jshint ignore:start */
   render: function() {
     if (this.state.status === states.UPLOADED) {
       document.documentElement.className='processing';
         return (
             <div className='container' onDragOver={this.onDragOver} onDragLeave={this.onDragLeave} onDrop={this.onDrop}>
-                <Controls></Controls>
+                <Controls changeState={this.changeState} isAnythingSelected={this.state.selected} state={this.state.status}></Controls>
                 <Flasherror error={this.state.flashError} clearError={this.clearError}></Flasherror>
                 <Photostrip photos={this.state.photos}></Photostrip>
               <SaveFileUpload photoParser={this.parsePhotos}></SaveFileUpload>
             </div>
         );
+    } else if (this.state.status === states.ANIMATING) {
+      var photos = this.state.photos.getSelectedOrEverything();
+
+      return (
+          <div>
+            <Controls changeState={this.changeState} isAnythingSelected={this.state.selected} state={this.state.status}></Controls>
+            <Flasherror error={this.state.flashError} clearError={this.clearError}></Flasherror>
+            <Animationstrip photos={photos}></Animationstrip>
+            <SaveFileUpload photoParser={this.parsePhotos}></SaveFileUpload>
+          </div>
+        );
+      document.documentElement.className='home';
     } else {
       document.documentElement.className='home';
 

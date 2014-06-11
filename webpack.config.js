@@ -14,7 +14,7 @@ module.exports = {
 
   cache: true,
   debug: true,
-  devtool: false,
+  devtool: 'inline-sourcemap',
   entry: './src/scripts/components/<%= pkg.mainInput %>.jsx',
 
   stats: {

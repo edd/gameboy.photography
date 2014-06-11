@@ -23,16 +23,23 @@ var About = React.createClass({
                 <h1>Using this site</h1>
                 <p className="lead">This site will extract photos from your Gameboy Save File</p>
                 <p>To use it, you&rsquo;ll need a .sav file from your Gameboy Camera. If you don&rsquo;t have one yet, skip down to the <a href="#why">How</a> section.</p>
-              </main>
-              <aside className="hero block illustration">
-                <ul className="gallery">
-                  <li><img src="../images/h-1.png" alt="" /></li>
-                  <li><img src="../images/h-2.png" alt="" /></li>
-                  <li><img src="../images/h-3.png" alt="" /></li>
-                </ul>
-              </aside>
-              <main className="instructions block">
+
                 <h2>How?</h2>
+                <ul className="gallery">
+                  <li>
+                    <img src="../images/home/printer.webp" width="128" alt="" />
+                    <p>Printer</p>
+                  </li>
+                  <li>
+                    <img src="../images/home/madcatz.webp" width="128" alt="" />
+                    <p>Madcatz printer cable</p>
+                  </li>
+                  <li>
+                    <img src="../images/home/cart.webp" width="128" alt="" />
+                    <p>Cartridge reader</p>
+                  </li>
+                </ul>
+
                 <p>The hard bit is getting the save file off your Gameboy Cartridge.</p>
                 <h3>USB Cartridge reader</h3>
                 <p>This is the best way &rsquo; with a caveat, that they're a bit hard to get hold of. There's the <a href="http://www.gameboycarts.com/2009/11/smartboy-32-mb-flash-cart-review/">Smartboy cartridge reader</a>. There was the Bleep Bloop programmer.</p>
@@ -44,8 +51,16 @@ var About = React.createClass({
                 <p>Doing it this way does get you the olde official borders for free, but otherwise &mdash; man, it&rsquo;s a lot of hassle.</p>
               </main>
               <aside className="hero block illustration">
-
+                <ul className="gallery">
+                  <li><a href="https://www.flickr.com/photos/eddhannay/4786292116/in/set-72157622902495793"><img src="../images/h-1.png" alt="" /></a></li>
+                  <li><a href="https://www.flickr.com/photos/eddhannay/4898318806/in/set-72157622902495793"><img src="../images/h-2.png" alt="" /></a></li>
+                  <li><a href="https://www.flickr.com/photos/eddhannay/6847188924/in/set-72157622902495793"><img src="../images/h-3.png" alt="" /></a></li>
+                </ul>
               </aside>
+              <footer>
+                  <p>Made by <a href="https://twitter.com/eddhannay">@eddhannay</a>, 2014. </p>
+              </footer>
+
           </div>
       )
   }

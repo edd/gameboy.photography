@@ -80,3 +80,7 @@
   .controls .settings{
     background: #FFF2A0 url(../images/iconmonstr-tools-2-icon-24.png) 5px center no-repeat;
   }
+
+  .controls .animate{
+    background: #FFF2A0 url(../images/iconmonstr-video-4-icon-24.png) 5px center no-repeat;
+  }

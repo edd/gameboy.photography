@@ -32,10 +32,10 @@
     "jshint-loader": "~0.6.0",
     "grunt-contrib-copy": "~0.5.0",
     "grunt-contrib-clean": "~0.5.0",
-
     "jszip": "~2.2.2",
     "lodash.uniq": "~2.4.1",
     "lodash.filter": "~2.4.1",
-    "lodash.map": "~2.4.1"
+    "lodash.map": "~2.4.1",
+    "gif.js": "~0.1.6"
   }
 }
