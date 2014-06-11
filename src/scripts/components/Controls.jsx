@@ -11,6 +11,8 @@ var Gif = require('../libs/gif.js');
 var Photos = require('../libs/photoStore.js');
 var Paletteselector = require('./Paletteselector.jsx');
 var states = require('../libs/states');
+var toArray = require('lodash.toarray');
+var map = require('lodash.map');
 
 var Controls = React.createClass({
   /*jshint ignore:start */
@@ -51,8 +53,10 @@ var Controls = React.createClass({
   gifPhotos: function(event){
     event.preventDefault();
 
-    var images = Photos.getSelectedOrEverything().map(function(photo){
-      return photo.getImageData();
+    var photos = toArray(document.getElementsByTagName('canvas'));
+
+    var images = map(photos, function(photo){
+      return photo.toDataURL();
     });
 
     var gif = new Gif();

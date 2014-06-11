@@ -118,7 +118,7 @@ var Photo = React.createClass({
   /*jshint ignore:start */
   render: function () {
     return (
-        <canvas className={(this.state.selected)? 'selected' : ''} onClick={this.selectPhoto} rel={this.state.photo.id} width={this.getWidth()} height={this.getHeight()}>
+        <canvas className={(this.state.selected)? 'selected' : ''} onClick={this.selectPhoto} data-photo-id={this.state.photo.id} width={this.getWidth()} height={this.getHeight()}>
         </canvas>
       )
   }
