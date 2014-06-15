@@ -36,6 +36,10 @@
     "lodash.uniq": "~2.4.1",
     "lodash.filter": "~2.4.1",
     "lodash.map": "~2.4.1",
-    "gif.js": "~0.1.6"
+    "gif.js": "~0.1.6",
+    "lodash.findindex": "~2.4.1",
+    "lodash.toarray": "~2.4.1",
+    "lodash.debounce": "~2.4.1",
+    "lodash.foreach": "~2.4.1"
   }
 }

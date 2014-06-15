@@ -14,14 +14,11 @@ function Animation(speed, workers, quality){
   });
 };
 
-Animation.prototype.addFrames = function(images){
-
-  images.map(function(imageData){
+Animation.prototype.addFrame = function(imageData){
     var image = new Image();
     image.src = imageData;
 
     this.animation.addFrame(image);
-  }.bind(this));
 };
 
 Animation.prototype.render = function(callback){

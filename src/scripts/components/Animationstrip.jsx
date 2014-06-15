@@ -4,53 +4,65 @@
 
 'use strict';
 
-require('../../styles/Photostrip.css');
+require('../../styles/Animationstrip.css');
 
 var React = require('react/addons');
 var Photo = require('./Photo.jsx');
 var findIndex = require('lodash.findindex');
+var debounce = require('lodash.debounce');
+var each = require('lodash.foreach');
 
-var Photostrip = React.createClass({
+var Animationstrip = React.createClass({
   /*jshint ignore:start */
 
+  dropTarget: false,
+  dragElement: false,
+
   propTypes: {
-    photos: React.PropTypes.object.isRequired          // Array or PhotoStore
+    photos: React.PropTypes.array.isRequired          // Array or PhotoStore
   },
 
   getInitialState: function(){
-    return {
-      photos: this.props.photos,
-      dragElement: false,
-      dropTarget: false
-    };
+    this.debouncedOnDragOver = debounce(this.onDragOver, 20);
 
+    return {
+      photos: this.props.photos
+    };
   },
 
   onDragStart: function(event){
-    this.setState({
-      dragElement: event.target.getAttribute('data-photo-id')
-    });
+    this.dragElement = event.target.getAttribute('data-photo-id')
   },
 
 
   onDragOver: function(event){
-    this.setState({
-      dropTarget: event.target.getAttribute('data-photo-id')
-    });
+    if (event.target === null){
+      return false;
+    }
+
+    if (event.target) {
+      event.target.classList.add('hover');
+
+      if (event.target !== this.dropTarget && this.dropTarget !== false){
+        this.dropTarget.classList.remove('hover');
+      }
+
+      this.dropTarget = event.target
+    }
   },
 
   onDragEnd: function(event){
-    var dragging = this.state.dragElement,
-        dropTarget = this.state.dropTarget;
+    var dragging = this.dragElement,
+        dropTarget = this.dropTarget.getAttribute('data-position');
 
     event.preventDefault();
 
-    this.swapArrayItems(this.findElementInArray(dragging), this.findElementInArray(dropTarget));
+    this.dropTarget.classList.remove('hover');
 
-    this.setState({
-      dragElement: false,
-      dropTarget: false
-    });
+    this.swapArrayItems(this.findElementInArray(dragging), dropTarget);
+
+    this.dragElement = false;
+    this.dropTarget = false;
   },
 
   findElementInArray: function(photoId){
@@ -60,25 +72,43 @@ var Photostrip = React.createClass({
   },
 
   swapArrayItems: function(sourceIndex, targetIndex){
-    var tempArray = this.state.photos,
-        tempValue = this.state.photos[sourceIndex];
+    var photos = this.state.photos,
+        element = photos[sourceIndex],
+        target = (targetIndex > sourceIndex)? targetIndex-1 :targetIndex;
 
-    tempArray[sourceIndex] = tempArray[targetIndex];
-    tempArray[targetIndex] = tempValue;
+
+    photos.splice(sourceIndex, 1);
+    photos.splice(target, 0, element);
 
     this.setState({
-      photos: tempArray
+      photos: photos
     });
 
   },
 
+  renderSpacer: function (i) {
+    return (<li key={i} onDragOver={this.onDragOver} className="animationPosition" data-position={i}></li>);
+  },
+
+  renderPhoto: function (photo) {
+    return (<li key={photo.id} data-photo-id={photo.id} className="photo" draggable="true"><Photo selectable={false} filter={this.props.filter} photo={photo.id}></Photo></li>);
+  },
+
   render: function () {
-    var photoNodes = this.state.photos.map(function (photo) {
-      return <li key={photo.id} data-photo-id={photo.id} className="photo" draggable="true" onDragOver={this.onDragOver}><Photo selectable={false} filter={this.props.filter} photo={photo.id}></Photo></li>;
+    var photoNodes = [],
+        i = 0;
+
+    this.state.photos.forEach(function (photo) {
+      photoNodes.push(this.renderSpacer(i));
+      photoNodes.push(this.renderPhoto(photo));
+
+      i++;
     }.bind(this));
 
+    photoNodes.push(this.renderSpacer(i));
+
     return (
-        <ol className="photoList" onClick={this.selectPhoto} onDragStart={this.onDragStart} onDragEnd={this.onDragEnd}>
+        <ol className="photoList animationEditor" onClick={this.selectPhoto} onDragStart={this.onDragStart} onDragEnd={this.onDragEnd}>
         {photoNodes}
         </ol>
         );
@@ -86,4 +116,4 @@ var Photostrip = React.createClass({
   /*jshint ignore:end */
 });
 
-module.exports = Photostrip;
+module.exports = Animationstrip;
