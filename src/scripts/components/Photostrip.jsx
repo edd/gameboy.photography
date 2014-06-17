@@ -22,7 +22,7 @@ var Photostrip = React.createClass({
 
   render: function () {
     var photoNodes = this.props.photos.get().map(function (photo) {
-      return <li key={photo.id} className="photo"><Photo selectable={true} filter={this.props.filter} photo={photo.id}></Photo></li>;
+      return <li key={photo.id} className="photo" draggable="true"><Photo selectable={true} filter={this.props.filter} photo={photo.id}></Photo></li>;
     }.bind(this));
 
     return (

@@ -14,10 +14,10 @@ function stringToHex(string){
 
     return hex;
 }
+
 function validateFile(saveFile){
   var TEST_STRING = 'Magic';
 
-  // test Photos
   for (var i = 0x2FB1; i < 0x1FFB1; i += 0x1000){
     var buffer = saveFile.slice(i, i + 5);
 
@@ -30,7 +30,6 @@ function validateFile(saveFile){
 
   return true;
 }
-
 
 var GBCDump = function(files){
   this.fr = new FileReader();

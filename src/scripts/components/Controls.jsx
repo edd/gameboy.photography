@@ -9,10 +9,11 @@ require('../../styles/Controls.css');
 var Zip = require('../libs/zip.js');
 var Gif = require('../libs/gif.js');
 var Photos = require('../libs/photoStore.js');
-var Paletteselector = require('./Paletteselector.jsx');
 var states = require('../libs/states');
 var toArray = require('lodash.toarray');
 var each = require('lodash.foreach');
+var Paletteselector = require('./Paletteselector.jsx');
+var AnimationSelector = require('./Animationselector.jsx');
 
 var Controls = React.createClass({
   /*jshint ignore:start */
@@ -75,67 +76,39 @@ var Controls = React.createClass({
     Photos.delete();
   },
 
-  createAnimation: function(){
-    this.props.changeState(states.ANIMATING);
-  },
-
-  cancelAnimation: function(){
-    this.props.changeState(states.UPLOADED);
+  toggleAnimation: function(){
+    if (this.props.state === states.ANIMATING){
+      this.props.changeState(states.UPLOADED);
+    } else {
+      this.props.changeState(states.ANIMATING);
+    }
   },
 
   render: function () {
     var animation,
         zip;
 
-    if (this.props.state === states.ANIMATING) {
-      return (<div className="controls">
-        <ul>
-          <li className="control"><button className="zip" onClick={this.gifPhotos} ><span>Download animation</span></button></li>
-          <li className="control"><button className="animate" onClick={this.cancelAnimation}><span>Cancel animation</span></button></li>
-          <li className="control right"><button className="settings" onClick={this.showSettings}><span>Settings</span></button></li>
-        </ul>
-      </div>
-          )
+    var downloadText = '';
+
+    var length = Photos.getSelectedOrEverything().length;
+    if (this.props.isAnythingSelected === false){
+      downloadText = 'Download '+length;
     } else {
-      //           <li className="control"><button className="resize" onClick={this.resize} ><span>Embiggen {this.state.scale}x</span></button></li>
-
-
-      var downloadText = '';
-
-      var length = Photos.getSelectedOrEverything().length;
-      if (this.props.isAnythingSelected === false){
-        downloadText = 'Download all '+length;
-      } else {
-        downloadText = 'Download '+length;
-      }
-
-      return (<div className="controls">
-
-        <ul>
-          <li className="control"><button className="zip" onClick={this.zipPhotos} ><span>{downloadText}</span></button></li>
-          <Paletteselector />
-          <li className={(this.props.isAnythingSelected)? 'control' : 'hidden'}><button className="animate" onClick={this.createAnimation}><span>Create Animation</span></button></li>
-          <li className={(this.props.isAnythingSelected)? 'control' : 'hidden'}><button className="delete" onClick={this.delete}><span>Delete</span></button></li>
-          <li className="control right"><button className="settings" onClick={this.showSettings}><span>Settings</span></button></li>
-        </ul>
-      </div>
-      )
+      downloadText = 'Download '+length;
     }
 
-
+    return (<div className="controls">
+      <ul>
+        <li className="control"><button className="zip" onClick={this.zipPhotos} ><span>{downloadText}</span></button></li>
+        <Paletteselector />
+        <AnimationSelector state={this.props.state} toggleAnimation={this.toggleAnimation} />
+        <li className={(this.props.isAnythingSelected)? 'control' : 'hidden'}><button className="delete" onClick={this.delete}><span>Delete</span></button></li>
+        <li className="control right"><button className="settings" onClick={this.showSettings}><span>Settings</span></button></li>
+      </ul>
+    </div>
+    )
   }
   /*jshint ignore:end */
 });
 
-/*
- <li className="control"><button className="undo" onClick={this.undo}><span>Undo</span></button></li>
- <button className="filter" onClick={this.setFilter}>Palette</button>
- <select className="filter" onChange={this.setFilter}>
- <option selected="selected" disabled="disabled">Set filter</option>
- <option>Red</option>
- <option>Gameboy</option>
- <option>Silver</option>
- </select>
-
- */
 module.exports = Controls;

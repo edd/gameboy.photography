@@ -118,28 +118,15 @@ var GameboyphotographyApp = React.createClass({
 
   /*jshint ignore:start */
   render: function() {
-    if (this.state.status === states.UPLOADED) {
+    if (this.state.status !== states.home) {
       document.documentElement.className='processing';
         return (
             <div className='container' onDragOver={this.onDragOver} onDragLeave={this.onDragLeave} onDrop={this.onDrop}>
-                <Controls changeState={this.changeState} isAnythingSelected={this.state.selected} state={this.state.status}></Controls>
-                <Flasherror error={this.state.flashError} clearError={this.clearError}></Flasherror>
-                <Photostrip photos={this.state.photos}></Photostrip>
-              <SaveFileUpload photoParser={this.parsePhotos}></SaveFileUpload>
+              <Controls changeState={this.changeState} isAnythingSelected={this.state.selected} state={this.state.status}></Controls>
+              <Flasherror error={this.state.flashError} clearError={this.clearError}></Flasherror>
+              <Photostrip photos={this.state.photos}></Photostrip>
             </div>
         );
-    } else if (this.state.status === states.ANIMATING) {
-      var photos = this.state.photos.getSelectedOrEverything();
-
-      return (
-          <div>
-            <Controls changeState={this.changeState} isAnythingSelected={this.state.selected} state={this.state.status}></Controls>
-            <Flasherror error={this.state.flashError} clearError={this.clearError}></Flasherror>
-            <Animationstrip photos={photos}></Animationstrip>
-            <SaveFileUpload photoParser={this.parsePhotos}></SaveFileUpload>
-          </div>
-        );
-      document.documentElement.className='home';
     } else {
       document.documentElement.className='home';
 

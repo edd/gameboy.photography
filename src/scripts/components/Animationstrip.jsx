@@ -108,7 +108,7 @@ var Animationstrip = React.createClass({
     photoNodes.push(this.renderSpacer(i));
 
     return (
-        <ol className="photoList animationEditor" onClick={this.selectPhoto} onDragStart={this.onDragStart} onDragEnd={this.onDragEnd}>
+        <ol className="photoList animationEditor" onClick={this.selectPhoto} onDragStart={this.onDragStart}>
         {photoNodes}
         </ol>
         );
