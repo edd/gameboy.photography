@@ -17,7 +17,7 @@ var Photo = React.createClass({
 
   propTypes: {
     selectable: React.PropTypes.bool.isRequired,      // True if clicking should select it
-    photo: React.PropTypes.string.isRequired,          // UID of photo for this canvas
+    photo: React.PropTypes.string.isRequired,         // UID of photo for this canvas
     onClick: React.PropTypes.func
   },
 

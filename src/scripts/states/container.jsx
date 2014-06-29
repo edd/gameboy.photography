@@ -18,11 +18,8 @@ module.exports = React.createClass({
   },
 
   render: function() {
+    var contents = (this.props.activeRoute)? this.props.activeRoute : (<Home />);
 
-    if (this.props.activeRoute){
-      return <div className="container">{this.props.activeRoute}</div>
-    } else {
-      return <div className="container"><Home /></div>
-    }
+    return <div className="container">{contents}</div>
   }
 });

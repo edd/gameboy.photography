@@ -35,9 +35,13 @@ module.exports = React.createClass({
     }.bind(this));
 
     return (
-        <ul className="palettePicker">
-           {options}
-        </ul>
+        <div className="other">
+          <ul className="palettePicker">
+             {options}
+          </ul>
+
+          {this.props.activeRoute}
+        </div>
       )
   }
 });

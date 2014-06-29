@@ -22,6 +22,10 @@ React.renderComponent((
     <Route handler={Container}>
       <Route name="editor" handler={Editor}>
         <Route name="filter" handler={Filter} />
+        <Route name="download" handler={Download} />
+        <Route name="animation" handler={Animation}>
+          <Route name="animationDownload" handler={Download} />
+        </Route>
       </Route>
     </Route>
 

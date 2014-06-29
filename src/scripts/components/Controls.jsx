@@ -5,13 +5,13 @@
 'use strict';
 
 var React = require('react/addons');
-var Zip = require('../libs/zip.js');
 var Gif = require('../libs/gif.js');
 var Photos = require('../libs/photoStore.js');
 var states = require('../libs/states');
+var GlobalEvents = require('../libs/events');
 var each = require('lodash.foreach');
-var AnimationSelector = require('./Animationselector.jsx');
 var Router = require('react-nested-router');
+var Link = Router.Link;
 
 require('../../styles/Controls.css');
 
@@ -24,7 +24,10 @@ var Controls = React.createClass({
   },
 
   getInitialState: function(){
+    GlobalEvents.on('state', this.stateDidChange);
+
     return {
+      state: GlobalEvents.getState(),
       scale: 2
     }
   },
@@ -39,44 +42,6 @@ var Controls = React.createClass({
     Photos.resize(this.state.scale);
   },
 
-  download: function (event){
-    if (this.props.state === states.ANIMATING){
-      this.gifPhotos(event);
-    } else {
-      this.zipPhotos(event)
-    }
-  },
-
-  zipPhotos: function(event){
-    event.preventDefault();
-
-    var images = Photos.getSelectedOrEverything().map(function(photo){
-      return photo.getDOMNode().toDataURL();
-
-    });
-
-    var zippedImages = new Zip(images);
-
-    window.location = window.URL.createObjectURL(zippedImages);
-  },
-
-  gifPhotos: function(event){
-    event.preventDefault();
-
-    var photos = document.querySelectorAll('.controls canvas');
-    var gif = new Gif();
-
-    each(photos, function(photo){
-      var frame = photo.toDataURL();
-      gif.addFrame(frame);
-    });
-
-
-    gif.render(function(blob){
-      window.open(URL.createObjectURL(blob));
-    });
-  },
-
   undo: function(){
     Photos.undo();
   },
@@ -85,16 +50,10 @@ var Controls = React.createClass({
     Photos.delete();
   },
 
-  toggleAnimation: function(){
-    if (this.props.state === states.ANIMATING){
-      this.props.changeState(states.UPLOADED);
-    } else {
-      this.props.changeState(states.ANIMATING);
-    }
-  },
-
-  showFilter: function(){
-    Router.transitionTo('filter');
+  stateDidChange: function(newState){
+    this.setState({
+      state: newState
+    });
   },
 
   render: function () {
@@ -102,28 +61,34 @@ var Controls = React.createClass({
     var downloadText = '';
     var length = Photos.getSelectedOrEverything().length;
 
-    if (this.props.state === states.ANIMATING){
+    if (this.state.state === states.ANIMATING){
       downloadText = 'Download animation';
-    } else if (this.props.isAnythingSelected === false){
-      downloadText = 'Download '+length;
     } else {
-      downloadText = 'Download '+length;
+      downloadText = 'Download';
     }
 
-    /*<AnimationSelector state={this.props.state} toggleAnimation={this.toggleAnimation} /> */
+    var download;
+
+    if (this.state.state === states.ANIMATING){
+      download = <Link to="animationDownload" className="zip"><span>{downloadText}</span></Link>
+    } else {
+      download = <Link to="download" className="zip"><span>{downloadText}</span></Link>
+    }
 
     return (<div className="controls">
-      <ul>
-        <li className="control" onClick={this.showFilter}>
-          <button className="filter"><span>Filter</span></button>
+      <ul className={this.state.state}>
+        <li className={(this.state.state === states.ANIMATING)? 'hidden' : 'control'}>
+          <Link to="animation" className="animate"><span>Animation</span></Link>
         </li>
-        <li className={(this.props.isAnythingSelected)? 'control' : 'hidden'}><button className="delete" onClick={this.delete}><span>Delete</span></button></li>
-        <li className="control right"><button className="zip" onClick={this.download} ><span>{downloadText}</span></button></li>
+        <li className={(this.props.isAnythingSelected)? 'control' : 'hidden'}>
+          <a className="delete" onClick={this.delete}><span>Delete</span></a></li>
+        <li className="control right">
+          {download}
+        </li>
       </ul>
     </div>
     )
   }
-  /*jshint ignore:end */
 });
 
 module.exports = Controls;

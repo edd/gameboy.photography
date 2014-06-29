@@ -1,6 +1,6 @@
 module.exports = {
   HOME: 'home',
   UPLOADING: 'uploading',
-  UPLOADED: 'uploaded',
+  EDITING: 'editing',
   ANIMATING: 'animating'
 };
