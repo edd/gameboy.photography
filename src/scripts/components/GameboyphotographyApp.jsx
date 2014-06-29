@@ -27,10 +27,9 @@ var imageURL = '../../images/yeoman.png';
 
 var GameboyphotographyApp = React.createClass({
   getInitialState: function(){
-    Photos.onDelete = this.updatedPhotos;
-
     Photos.on('selected', this.itemsAreSelected);
     Photos.on('noselection', this.noItemsAreSelected);
+    Photos.on('update', this.updatedPhotos);
 
     return {
       photos: Photos,

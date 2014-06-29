@@ -7,8 +7,9 @@
 'use strict';
 
 var React = require('react/addons');
-require('../../styles/Photo.css');
 var Photos = require('../libs/photoStore');
+var dragProxy = require('../libs/dragproxy');
+require('../../styles/Photo.css');
 
 var Photo = React.createClass({
   context: false,
@@ -32,8 +33,7 @@ var Photo = React.createClass({
       photo: photo,
       width: 128,
       height: 112,
-      scale: 1,
-      selected: this.props.selectable && photo.selected
+      scale: 1
     };
   },
 
@@ -52,6 +52,8 @@ var Photo = React.createClass({
   componentDidMount: function(){
     this.getContext();
     this.drawPhoto();
+
+    this.state.photo.setDOMNode(this.getDOMNode());
   },
 
   doResize: function(newScale){
@@ -115,10 +117,23 @@ var Photo = React.createClass({
     }
   },
 
+  onDragStart: function(event){
+    var id = event.target.getAttribute('data-photo-id');
+    var photo = Photos.get(id);
+
+    dragProxy.onDragStart(photo);
+  },
+
   /*jshint ignore:start */
   render: function () {
     return (
-        <canvas className={(this.state.selected)? 'selected' : ''} onClick={this.selectPhoto} data-photo-id={this.state.photo.id} width={this.getWidth()} height={this.getHeight()}>
+        <canvas
+            onDragStart={this.onDragStart}
+            draggable="true"
+            onClick={this.selectPhoto}
+            data-photo-id={this.state.photo.id}
+            width={this.getWidth()}
+            height={this.getHeight()}>
         </canvas>
       )
   }

@@ -1,7 +1,7 @@
 .controls{
   position: fixed;
   box-sizing: border-box;
-  background: #FFDC3B;
+  background: #607d8b;
   width: 100%;
   margin: 0;
   padding: 10px;
@@ -20,10 +20,10 @@
   }
 
   .controls button{
-    background: #FFF2A0;
+    background: #78909c;
     padding: 10px 10px 10px 35px;
-    border-radius: 5px;
-    border: 1px solid transparent;
+    border-radius: 2px;
+    border: 1px solid #78909c;
     -webkit-transition: border 0.3s ease;
   }
 
@@ -55,32 +55,33 @@
   .controls button:hover, .controls button:focus{
     outline: none;
     border: 1px solid #282828;
+    background-color: #eceff1;
   }
 
   .controls .zip{
-    background: #FFF2A0 url(../images/iconmonstr-zip-9-icon-24.png) 5px center no-repeat;
+    background: #cfd8dc url(../images/iconmonstr-zip-9-icon-24.png) 5px center no-repeat;
   }
 
   .controls .undo{
-    background: #FFF2A0 url(../images/iconmonstr-undo-5-icon-24.png) 5px center no-repeat;
+    background: #cfd8dc url(../images/iconmonstr-undo-5-icon-24.png) 5px center no-repeat;
   }
 
   .controls .resize{
-    background: #FFF2A0 url(../images/iconmonstr-resize-10-icon-24.png) 5px center no-repeat;
+    background: #cfd8dc url(../images/iconmonstr-resize-10-icon-24.png) 5px center no-repeat;
   }
 
   .controls .filter{
-    background: #FFF2A0 url(../images/iconmonstr-drop-11-icon-24.png) 5px center no-repeat;
+    background: #cfd8dc url(../images/iconmonstr-drop-11-icon-24.png) 5px center no-repeat;
   }
 
   .controls .delete{
-    background: #FFF2A0 url(../images/iconmonstr-x-mark-3-icon-24.png) 5px center no-repeat;
+    background: #cfd8dc url(../images/iconmonstr-x-mark-3-icon-24.png) 5px center no-repeat;
   }
 
   .controls .settings{
-    background: #FFF2A0 url(../images/iconmonstr-tools-2-icon-24.png) 5px center no-repeat;
+    background: #cfd8dc url(../images/iconmonstr-tools-2-icon-24.png) 5px center no-repeat;
   }
 
   .controls .animate{
-    background: #FFF2A0 url(../images/iconmonstr-video-4-icon-24.png) 5px center no-repeat;
+    background: #cfd8dc url(../images/iconmonstr-video-4-icon-24.png) 5px center no-repeat;
   }

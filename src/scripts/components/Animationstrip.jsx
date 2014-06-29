@@ -71,25 +71,6 @@ var Animationstrip = React.createClass({
     });
   },
 
-  swapArrayItems: function(sourceIndex, targetIndex){
-    var photos = this.state.photos,
-        element = photos[sourceIndex],
-        target = (targetIndex > sourceIndex)? targetIndex-1 :targetIndex;
-
-
-    photos.splice(sourceIndex, 1);
-    photos.splice(target, 0, element);
-
-    this.setState({
-      photos: photos
-    });
-
-  },
-
-  renderSpacer: function (i) {
-    return (<li key={i} onDragOver={this.onDragOver} className="animationPosition" data-position={i}></li>);
-  },
-
   renderPhoto: function (photo) {
     return (<li key={photo.id} data-photo-id={photo.id} className="photo" draggable="true"><Photo selectable={false} filter={this.props.filter} photo={photo.id}></Photo></li>);
   },

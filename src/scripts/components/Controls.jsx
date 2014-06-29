@@ -10,7 +10,6 @@ var Zip = require('../libs/zip.js');
 var Gif = require('../libs/gif.js');
 var Photos = require('../libs/photoStore.js');
 var states = require('../libs/states');
-var toArray = require('lodash.toarray');
 var each = require('lodash.foreach');
 var Paletteselector = require('./Paletteselector.jsx');
 var AnimationSelector = require('./Animationselector.jsx');
@@ -39,11 +38,20 @@ var Controls = React.createClass({
     Photos.resize(this.state.scale);
   },
 
+  download: function (event){
+    if (this.props.state === states.ANIMATING){
+      this.gifPhotos(event);
+    } else {
+      this.zipPhotos(event)
+    }
+  },
+
   zipPhotos: function(event){
     event.preventDefault();
 
     var images = Photos.getSelectedOrEverything().map(function(photo){
-      return photo.getImageData();
+      return photo.getDOMNode().toDataURL();
+
     });
 
     var zippedImages = new Zip(images);
@@ -54,7 +62,7 @@ var Controls = React.createClass({
   gifPhotos: function(event){
     event.preventDefault();
 
-    var photos = toArray(document.getElementsByTagName('canvas'));
+    var photos = document.querySelectorAll('.controls canvas');
     var gif = new Gif();
 
     each(photos, function(photo){
@@ -85,13 +93,13 @@ var Controls = React.createClass({
   },
 
   render: function () {
-    var animation,
-        zip;
-
+    var animation;
     var downloadText = '';
-
     var length = Photos.getSelectedOrEverything().length;
-    if (this.props.isAnythingSelected === false){
+
+    if (this.props.state === states.ANIMATING){
+      downloadText = 'Download animation';
+    } else if (this.props.isAnythingSelected === false){
       downloadText = 'Download '+length;
     } else {
       downloadText = 'Download '+length;
@@ -99,8 +107,8 @@ var Controls = React.createClass({
 
     return (<div className="controls">
       <ul>
-        <li className="control"><button className="zip" onClick={this.zipPhotos} ><span>{downloadText}</span></button></li>
-        <Paletteselector />
+        <li className="control"><button className="zip" onClick={this.download} ><span>{downloadText}</span></button></li>
+        <Paletteselector visibility={this.props.state !== states.ANIMATING} />
         <AnimationSelector state={this.props.state} toggleAnimation={this.toggleAnimation} />
         <li className={(this.props.isAnythingSelected)? 'control' : 'hidden'}><button className="delete" onClick={this.delete}><span>Delete</span></button></li>
         <li className="control right"><button className="settings" onClick={this.showSettings}><span>Settings</span></button></li>

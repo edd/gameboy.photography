@@ -37,6 +37,8 @@ PhotoStore.prototype.add = function(pixels){
   this._photos.push(photo);
   this.length = this._photos.length;
 
+  this.emit('update');
+
   return photo.id;
 };
 
@@ -143,9 +145,7 @@ PhotoStore.prototype.delete = function() {
     return (photo.selected !== true);
   });
 
-  if (typeof this.onDelete !== 'undefined'){
-    this.onDelete();
-  }
+  this.emit('update');
 
   this.save();
 };
@@ -169,6 +169,14 @@ PhotoStore.prototype.decoratePhoto = function(photo){
 
   photo.setImageData = function(imageData){
     this._imageData.push(imageData);
+  };
+
+  photo.setDOMNode = function(DOM){
+    this._currentDOMNode = DOM;
+  };
+
+  photo.getDOMNode = function(){
+    return this._currentDOMNode;
   };
 
   photo.getImageData = function(index){

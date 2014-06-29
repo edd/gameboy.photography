@@ -38,8 +38,16 @@ var Paletteselector = React.createClass({
       </li>);
     }.bind(this));
 
+    var classname;
+
+    if (this.props.visibility === true){
+      classname = (this.state.submenuVisible)? 'control submenu':'control';
+    } else {
+      classname = 'hidden';
+    }
+
     return (
-      <li className={(this.state.submenuVisible)? 'control submenu':'control' } onClick={this.showSubmenu}>
+      <li className={classname} onClick={this.showSubmenu}>
         <button className="filter"><span>Filter</span></button>
 
         <ul className="palettePicker">
