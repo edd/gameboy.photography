@@ -40,6 +40,7 @@
     "lodash.findindex": "~2.4.1",
     "lodash.toarray": "~2.4.1",
     "lodash.debounce": "~2.4.1",
-    "lodash.foreach": "~2.4.1"
+    "lodash.foreach": "~2.4.1",
+    "react-nested-router": "~0.2.0"
   }
 }

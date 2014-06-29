@@ -1,3 +1,5 @@
+
+
 /**
  * @jsx React.DOM
  */
@@ -6,26 +8,22 @@
 'use strict';
 
 var React = require('react/addons');
-var Photostrip = require('./Photostrip.jsx');
-var PhotoViewer = require('./Photoviewer.jsx');
-var SaveFileUpload = require('./SaveFileUpload.jsx');
-var Controls = require('./Controls.jsx');
+var Photostrip = require('../components/Photostrip.jsx');
+var PhotoViewer = require('../components/Photoviewer.jsx');
+var SaveFileUpload = require('../components/SaveFileUpload.jsx');
+var Controls = require('../components/Controls.jsx');
 var GBCDump = require('../libs/gbcdump.js');
-var About = require('./About.jsx');
 var Photos = require('../libs/photoStore');
-var Flasherror = require('./Flasherror.jsx');
+var Flasherror = require('../components/Flasherror.jsx');
 var states = require('../libs/states');
-var Animationstrip = require('./Animationstrip.jsx');
+var Animationstrip = require('../components/Animationstrip.jsx');
 
 // CSS
 require('../../styles/reset.css');
 require('../../styles/main.css');
 
-var imageURL = '../../images/yeoman.png';
 
-
-
-var GameboyphotographyApp = React.createClass({
+module.exports = React.createClass({
   getInitialState: function(){
     Photos.on('selected', this.itemsAreSelected);
     Photos.on('noselection', this.noItemsAreSelected);
@@ -63,20 +61,20 @@ var GameboyphotographyApp = React.createClass({
 
   onCompleteUpload: function(){
     this.setState({
-        status: states.UPLOADED
+      status: states.UPLOADED
     });
   },
 
   onDragOver: function(event){
-      event.preventDefault();
+    event.preventDefault();
 
-      this.getDOMNode().classList.add('peek');
+    this.getDOMNode().classList.add('peek');
   },
 
   onDragLeave: function(event){
-      event.preventDefault();
+    event.preventDefault();
 
-      this.getDOMNode().classList.remove('peek');
+    this.getDOMNode().classList.remove('peek');
   },
 
 
@@ -119,13 +117,14 @@ var GameboyphotographyApp = React.createClass({
   render: function() {
     if (this.state.status !== states.home) {
       document.documentElement.className='processing';
-        return (
-            <div className='container' onDragOver={this.onDragOver} onDragLeave={this.onDragLeave} onDrop={this.onDrop}>
-              <Controls changeState={this.changeState} isAnythingSelected={this.state.selected} state={this.state.status}></Controls>
-              <Flasherror error={this.state.flashError} clearError={this.clearError}></Flasherror>
-              <Photostrip photos={this.state.photos}></Photostrip>
-            </div>
-        );
+      return (
+          <div className='container' onDragOver={this.onDragOver} onDragLeave={this.onDragLeave} onDrop={this.onDrop}>
+            <Controls changeState={this.changeState} isAnythingSelected={this.state.selected} state={this.state.status}></Controls>
+            <Flasherror error={this.state.flashError} clearError={this.clearError}></Flasherror>
+            {this.props.activeRoute}
+            <Photostrip photos={this.state.photos}></Photostrip>
+          </div>
+          );
     } else {
       document.documentElement.className='home';
 
@@ -136,11 +135,7 @@ var GameboyphotographyApp = React.createClass({
           <SaveFileUpload photoParser={this.parsePhotos}></SaveFileUpload>
           <About></About>
         </div>
-     );
+        );
   }
   /*jshint ignore:end */
 });
-
-React.renderComponent(<GameboyphotographyApp />, document.body); // jshint ignore:line
-
-module.exports = GameboyphotographyApp;

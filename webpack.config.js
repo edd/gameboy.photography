@@ -15,7 +15,7 @@ module.exports = {
   cache: true,
   debug: true,
   devtool: 'inline-sourcemap',
-  entry: './src/scripts/components/<%= pkg.mainInput %>.jsx',
+  entry: './src/scripts/routes/routes.jsx',
 
   stats: {
     colors: true,

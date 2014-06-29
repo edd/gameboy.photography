@@ -13,22 +13,12 @@
   left: 0;
   right: 0;
 
-  z-index: -1;
   margin: 20px auto;
-}
-
-.peek .uploadTarget{
-    z-index: 1;
-}
-
-.peek .uploadTarget{
-    border: 3px dashed #ccc;
-    background-color: #999;
 }
 
 .uploadTarget.hover{
   border: 3px dashed #fff;
-    background-color: #999;
+  background-color: #999;
 }
 
 .uploading .uploadTarget{

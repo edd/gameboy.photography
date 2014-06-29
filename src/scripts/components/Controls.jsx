@@ -5,14 +5,15 @@
 'use strict';
 
 var React = require('react/addons');
-require('../../styles/Controls.css');
 var Zip = require('../libs/zip.js');
 var Gif = require('../libs/gif.js');
 var Photos = require('../libs/photoStore.js');
 var states = require('../libs/states');
 var each = require('lodash.foreach');
-var Paletteselector = require('./Paletteselector.jsx');
 var AnimationSelector = require('./Animationselector.jsx');
+var Router = require('react-nested-router');
+
+require('../../styles/Controls.css');
 
 var Controls = React.createClass({
   /*jshint ignore:start */
@@ -92,6 +93,10 @@ var Controls = React.createClass({
     }
   },
 
+  showFilter: function(){
+    Router.transitionTo('filter');
+  },
+
   render: function () {
     var animation;
     var downloadText = '';
@@ -105,13 +110,15 @@ var Controls = React.createClass({
       downloadText = 'Download '+length;
     }
 
+    /*<AnimationSelector state={this.props.state} toggleAnimation={this.toggleAnimation} /> */
+
     return (<div className="controls">
       <ul>
-        <li className="control"><button className="zip" onClick={this.download} ><span>{downloadText}</span></button></li>
-        <Paletteselector visibility={this.props.state !== states.ANIMATING} />
-        <AnimationSelector state={this.props.state} toggleAnimation={this.toggleAnimation} />
+        <li className="control" onClick={this.showFilter}>
+          <button className="filter"><span>Filter</span></button>
+        </li>
         <li className={(this.props.isAnythingSelected)? 'control' : 'hidden'}><button className="delete" onClick={this.delete}><span>Delete</span></button></li>
-        <li className="control right"><button className="settings" onClick={this.showSettings}><span>Settings</span></button></li>
+        <li className="control right"><button className="zip" onClick={this.download} ><span>{downloadText}</span></button></li>
       </ul>
     </div>
     )

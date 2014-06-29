@@ -5,11 +5,22 @@
 'use strict';
 
 var React = require('react/addons');
+var SaveFileUpload = require('../components/SaveFileUpload.jsx');
+var Link = require('react-nested-router').Link;
+var Photos = require('../libs/photoStore');
+
 require('../../styles/About.css');
 
 var About = React.createClass({
-  /*jshint ignore:start */
+  renderLink: function () {
+    if (Photos.length > 0){
+      return (<Link to="editor">Go to editor</Link>)
+    }
+  },
+
   render: function () {
+    var Link = this.renderLink();
+
         return (
             <div className="about">
               <aside className="tophero">
@@ -17,6 +28,8 @@ var About = React.createClass({
                   <div className="lead">
                     <h1>Thinger</h1>
                     <p>Upload your Gameboy Camera photos</p>
+                    <p>{Link}</p>
+                    <SaveFileUpload></SaveFileUpload>
                    </div>
               </aside>
               <main className="instructions block">
