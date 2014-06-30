@@ -35,6 +35,18 @@ module.exports = React.createClass({
     }
   },
 
+  firefoxFix: function(){
+    var dragItems = document.querySelectorAll('[draggable=true]');
+
+    for (var i = 0; i < dragItems.length; i++) {
+      dragItems[i].addEventListener('dragstart', function (event) {
+        // store the ID of the element, and collect it on the drop later on
+
+        event.dataTransfer.setData('Text', this.id);
+      });
+    }
+  },
+
   itemsAreSelected: function (){
     this.setState({selected: true});
   },
@@ -49,6 +61,10 @@ module.exports = React.createClass({
 
   componentWillReceiveProps: function(){
     GlobalEvents.emit('animationHeight', 20);
+  },
+
+  componentDidMount: function(){
+    this.firefoxFix();
   },
 
   /*jshint ignore:start */
