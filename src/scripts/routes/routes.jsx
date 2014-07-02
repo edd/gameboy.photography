@@ -19,7 +19,7 @@ require('../../styles/reset.css');
 require('../../styles/main.css');
 
 React.renderComponent((
-    <Route handler={Container}>
+    <Route handler={Container} location="history">
       <Route name="editor" handler={Editor}>
         <Route name="filter" handler={Filter} />
         <Route name="download" handler={Download} />

@@ -9,10 +9,16 @@ var states = require('../../libs/states');
 var dragProxy = require('../../libs/dragproxy');
 var Photo = require('../../components/Photo.jsx');
 var GlobalEvents = require('../../libs/events.js');
+var findIndex = require('lodash.findindex');
 
 require('../../../styles/Animationselector.css');
 
 var AnimationSelector = React.createClass({
+  dragElement: false,
+
+  // Hacky fix for ondragend after ondropspacer
+  ignoreDragEnd: false,
+
   propTypes: {
     state: React.PropTypes.string.isRequired
   },
@@ -24,10 +30,18 @@ var AnimationSelector = React.createClass({
     };
   },
 
+  onDragStart: function(event){
+    this.dragElement = event.target;
+  },
+
   onDragEnd: function(event, index){
     event.preventDefault();
     event.stopPropagation();
 
+    if (this.ignoreDragEnd){
+      this.ignoreDragEnd = false;
+      return false;
+    }
     var photo = dragProxy.onDragEnd();
 
     var photos = this.state.photos;
@@ -100,10 +114,19 @@ var AnimationSelector = React.createClass({
       this.onDragEnd(event, dropTarget);
     } else {
       this.swapArrayItems(this.findElementInArray(dragging), dropTarget);
+      this.ignoreDragEnd = true;
     }
 
     this.dragElement = undefined;
     this.dropTarget = false;
+  },
+
+  findElementInArray: function(canvasTag){
+    var id = canvasTag.getAttribute('data-photo-id');
+
+    return findIndex(this.state.photos, function(photo){
+      return (photo.id === id);
+    })
   },
 
   swapArrayItems: function(sourceIndex, targetIndex){
@@ -123,30 +146,9 @@ var AnimationSelector = React.createClass({
     event.preventDefault();
   },
 
-  renderFrames: function(){
-    if (this.state.photos.length > 0){
-      var i = 0,
-          photoNodes = [];
-
-      this.state.photos.forEach(function (photo) {
-        photoNodes.push(<li key={i} onDrop={this.onDropSpacer} onDragOver={this.onDragOverSpacer} onDragLeave={this.onDragLeaveSpacer} className="animationPosition" data-position={i}></li>);
-        photoNodes.push(<li key={photo.id+i} className="photo"><Photo selectable={true} photo={photo.id}></Photo></li>);
-        i++;
-      }.bind(this));
-
-      photoNodes.push(<li key={i} onDragOver={this.onDragOverSpacer} className="animationPosition" data-position={i}></li>);
-
-      return photoNodes;
-    } else {
-      return <li className="description">Drag a frame here to get started</li>
-    }
-  },
-
   componentWillReceiveProps: function(nextProps){
     var height = this.getHeight();
     var style;
-
-    console.log(nextProps);
 
     if (nextProps !== null && nextProps.activeRoute !== null) {
       style = {
@@ -182,6 +184,25 @@ var AnimationSelector = React.createClass({
 
   removeEnterClass: function(){
     this.getDOMNode().classList.remove('enter');
+  },
+
+  renderFrames: function(){
+    if (this.state.photos.length > 0){
+      var i = 0,
+          photoNodes = [];
+
+      this.state.photos.forEach(function (photo) {
+        photoNodes.push(<li key={i} onDrop={this.onDropSpacer} onDragOver={this.onDragOverSpacer} onDragLeave={this.onDragLeaveSpacer} className="animationPosition" data-position={i}></li>);
+        photoNodes.push(<li onDragStart={this.onDragStart} key={photo.id+i} className="photo"><Photo selectable={true} photo={photo.id}></Photo></li>);
+        i++;
+      }.bind(this));
+
+      photoNodes.push(<li key={i} onDragOver={this.onDragOverSpacer} className="animationPosition" data-position={i}></li>);
+
+      return photoNodes;
+    } else {
+      return <li className="description">Drag a frame here to get started</li>
+    }
   },
 
   render: function () {

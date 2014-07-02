@@ -81,7 +81,8 @@ module.exports = React.createClass({
   },
 
   cancel: function(){
-    Router.transitionTo('editor');
+    //Router.transitionTo('editor');
+    Router.goBack();
   },
 
   render: function () {

@@ -88,6 +88,11 @@ var Photo = React.createClass({
     if (imageData !== false){
       var image = new Image();
       image.src = imageData;
+
+      console.log(imageData);
+
+      console.log(typeof imageData);
+
       image.onload = function () {
         this.getContext();
         this.context.drawImage(image, 0, 0, this.getWidth(), this.getHeight());

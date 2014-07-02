@@ -106,6 +106,18 @@ PhotoStore.prototype.restore = function(id) {
   return false;
 };
 
+PhotoStore.prototype.restoreFromObject = function(obj) {
+  this._photos = obj.map(function(photo){
+    return this.decoratePhoto(photo);
+  }.bind(this));
+
+  console.log(this._photos);
+
+  this.emit('restored');
+
+  return true;
+};
+
 PhotoStore.prototype.undo = function() {
   this.getSelectedOrEverything().map(function(photo){
     photo.undo();
