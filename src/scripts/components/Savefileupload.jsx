@@ -64,6 +64,7 @@ var Savefileupload = React.createClass({
   render: function () {
       return (
         <div className="uploadTarget" onDragOver={this.onDragOver} onDragLeave={this.onDragLeave} onDrop={this.onDrop} onDragEnd={this.onDrop}>
+          <p>Drag here</p>
           <p className="upload hidden">
             <label>Drag &amp; drop not supported, but you can still upload via this input field:<br />
               <input type="file" />

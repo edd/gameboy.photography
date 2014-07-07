@@ -1,0 +1,61 @@
+
+.animationSteps{
+  transition: transform 0.2s ease-in-out;
+  -webkit-transition: -webkit-transform 0.2s ease-in-out;
+
+  display: block;
+
+  padding: 10px 10px;
+
+  width: 100%;
+  min-height: 136px;
+
+  background: #fff;
+
+  position: fixed;
+
+  z-index: 5;
+
+  -webkit-box-shadow: 0px 5px 5px 0px rgba(50, 50, 50, 0.45);
+  -moz-box-shadow:    0px 5px 5px 0px rgba(50, 50, 50, 0.45);
+  box-shadow:         0px 5px 5px 0px rgba(50, 50, 50, 0.45);
+}
+
+.animationSteps li{
+  display: inline-block;
+}
+
+.animationPosition{
+  display: inline-block;
+  background-color: transparent;
+  width: 10px;
+  height: 112px;
+}
+
+.animationPosition.hover{
+  width: 40px;
+}
+
+.animationSteps .description{
+  position: absolute;
+  top: 48%;
+  width: 100%;
+  text-align: center;
+}
+
+.animationWrapper.enter{
+  transform: translateY(-120px);
+  -webkit-transform: translateY(-120px);
+}
+
+.animationWrapper{
+  transition: transform 0.2s ease-out;
+  -webkit-transition: -webkit-transform 0.2s ease-out;
+
+  transform: translateY(0);
+  -webkit-transform: translateY(0);
+}
+
+[draggable=true] {
+  -khtml-user-drag: element;
+}

@@ -26,19 +26,10 @@ html.processing, html.processing body{
 /* main */
 .container{
   width: 100%;
-  padding-top: 60px;
-
-
 }
 
 .container:after {
   content: "";
   display: table;
   clear: both;
-}
-
-footer{
-  padding: 10px 0;
-  text-align: center;
-  font-size: 0.7em;
 }

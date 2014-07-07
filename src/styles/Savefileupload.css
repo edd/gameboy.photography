@@ -1,23 +1,25 @@
 .uploadTarget{
-  width: 300px;
-  height: 250px;
+  width: 100px;
+  height: 100px;
 
-  border: 3px dashed #aaa;
+  padding-top: 20px;
 
   transition: all 0.5s ease;
 
-  background: transparent url('../images/iconmonstr-upload-9-icon.svg') center center no-repeat;
+  background: transparent url('../images/iconmonstr-upload-9-icon.svg') center 80% no-repeat;
   background-size: 50% 50%;
+  background-color: #fed200;
 
   position: absolute;
-  left: 0;
-  right: 0;
+  top: 0;
+  left: 80px;
+  box-shadow: 0px -1px 17px 5px rgba(204, 164, 28, 0.75);
 
-  margin: 20px auto;
+
+  margin: 0 auto;
 }
 
 .uploadTarget.hover{
-  border: 3px dashed #fff;
   background-color: #999;
 }
 
