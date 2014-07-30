@@ -13,7 +13,7 @@ var Controls = require('../components/Controls.jsx');
 var Photos = require('../libs/photoStore');
 var Flasherror = require('../components/Flasherror.jsx');
 var states = require('../libs/states');
-var Router = require('react-nested-router');
+var Router = require('react-router');
 var GlobalEvents = require('../libs/events.js');
 
 // CSS
@@ -63,6 +63,12 @@ module.exports = React.createClass({
     GlobalEvents.emit('animationHeight', 20);
   },
 
+  componentWillMount: function(){
+    if (this.state.photos.length === 0){
+      Router.transitionTo('/');
+    }
+  },
+
   componentDidMount: function(){
     this.firefoxFix();
   },
@@ -79,9 +85,9 @@ module.exports = React.createClass({
               changeState={this.changeState}
               isAnythingSelected={this.state.selected}
               state={this.state.status} />
-
           <Flasherror error={this.state.flashError} clearError={this.clearError}></Flasherror>
-          {this.props.activeRoute}
+
+          {this.props.activeRouteHandler()}
 
           <Photostrip photos={this.state.photos} menuActive={shouldShowPhotos}></Photostrip>
         </div>

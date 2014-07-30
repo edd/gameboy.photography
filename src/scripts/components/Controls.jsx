@@ -4,13 +4,13 @@
 
 'use strict';
 
-var React = require('react/addons');
+var React = require('react');
 var Gif = require('../libs/gif.js');
 var Photos = require('../libs/photoStore.js');
 var states = require('../libs/states');
 var GlobalEvents = require('../libs/events');
-var each = require('lodash.foreach');
-var Router = require('react-nested-router');
+var each = require('lodash').foreach;
+var Router = require('react-router');
 var Link = Router.Link;
 
 require('../../styles/Controls.css');
@@ -77,10 +77,13 @@ var Controls = React.createClass({
 
     return (<div className="controls">
       <ul className={this.state.state}>
-        <li className={(this.state.state === states.ANIMATING)? 'hidden' : 'control'}>
+        <li className={(this.state.state === states.ANIMATING || this.props.isAnythingSelected === true)? 'hidden' : 'control'}>
           <Link to="animation" className="animate"><span>Animation</span></Link>
         </li>
-        <li className={(this.props.isAnythingSelected)? 'control' : 'hidden'}>
+        <li className={(this.state.state === states.ANIMATING)? 'control' : 'hidden'}>
+          <Link to="editor" className="animate"><span>Cancel</span></Link>
+        </li>
+        <li className={(this.props.isAnythingSelected && this.state.state !== states.ANIMATING)? 'control' : 'hidden'}>
           <a className="delete" onClick={this.delete}><span>Delete</span></a></li>
         <li className="control right">
           {download}

@@ -6,7 +6,7 @@
 
 var React = require('react');
 var Photos = require('../../libs/photoStore.js');
-var Zip = require('../../libs/zip.js');
+var Gif = require('../../libs/gif.js');
 var map = require('lodash').map;
 var Router = require('react-router');
 var availableSize = [
@@ -19,6 +19,14 @@ var availableSize = [
 ];
 
 module.exports = React.createClass({
+  download: function (event){
+    if (this.props.state === states.ANIMATING){
+      this.gifPhotos(event);
+    } else {
+      this.zipPhotos(event)
+    }
+  },
+
   resizePhotos: function(event){
     event.preventDefault();
 
@@ -27,18 +35,21 @@ module.exports = React.createClass({
     Photos.resize(value);
   },
 
-  zipPhotos: function(event){
+  gifPhotos: function(event){
     event.preventDefault();
 
-    var images = Photos.getSelectedOrEverything().map(function(photo){
-      return photo.getDOMNode().toDataURL();
+    var photos = document.querySelectorAll('.animationSteps canvas');
+    var gif = new Gif();
 
+    map(photos, function(photo){
+      var frame = photo.toDataURL();
+      gif.addFrame(frame);
     });
 
-    var zippedImages = new Zip(images);
 
-    window.location = window.URL.createObjectURL(zippedImages);
-    Router.transitionTo('editor');
+    gif.render(function(blob){
+      window.open(URL.createObjectURL(blob));
+    });
   },
 
   setFilter: function(event){
@@ -56,20 +67,17 @@ module.exports = React.createClass({
   },
 
   cancel: function(){
-    Router.transitionTo('editor');
-    //Router.goBack();
+    //Router.transitionTo('editor');
+    Router.transitionTo('animation');
   },
 
   render: function () {
     var options = this.renderOptions();
-    var photos = Photos.getSelectedOrEverything().length;
-
-    var photoWord = (photos > 1)? 'pictures' : 'picture';
 
     return (
           <div className="downloadPanel">
             <form>
-              <h1>Download {photos} {photoWord}</h1>
+              <h1>Download animation</h1>
               <p>
                 <label>Picture resolution
                   <select onChange={this.resizePhotos}>
@@ -78,7 +86,7 @@ module.exports = React.createClass({
                 </label>
               </p>
               <p className="complete">
-                <button className="control submit" onClick={this.zipPhotos}>Download</button>
+                <button className="control submit" onClick={this.gifPhotos}>Download</button>
                 <button className="control cancel" onClick={this.cancel}>Cancel</button>
               </p>
             </form>

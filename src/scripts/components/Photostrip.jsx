@@ -6,7 +6,7 @@
 
 require('../../styles/Photostrip.css');
 
-var React = require('react/addons');
+var React = require('react');
 var Photo = require('./Photo.jsx');
 var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
 var GlobalEvents = require('../libs/events.js');

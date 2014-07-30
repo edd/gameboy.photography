@@ -8,7 +8,7 @@
 var React = require('react/addons');
 var Home = require('../states/home.jsx');
 var Photos = require('../libs/photoStore');
-var Router = require('react-nested-router');
+var Router = require('react-router');
 
 module.exports = React.createClass({
   componentWillMount: function(){
@@ -18,8 +18,8 @@ module.exports = React.createClass({
   },
 
   render: function() {
-    var contents = (this.props.activeRoute)? this.props.activeRoute : (<Home />);
-
-    return <div className="container">{contents}</div>
+    return <div className="container">
+      {this.props.activeRouteHandler()}
+    </div>
   }
 });

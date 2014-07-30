@@ -5,7 +5,7 @@
 
 'use strict';
 
-var React = require('react/addons');
+var React = require('react');
 var Photo = require('./Photo.jsx');
 
 require('../../styles/Photoviewer.css');

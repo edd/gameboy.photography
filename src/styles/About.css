@@ -1,3 +1,18 @@
+@font-face {
+    font-family: 'din';
+    src: url('../fonts/dinmd.eot');
+    src: url('../fonts/dinmd.eot?#iefix') format('embedded-opentype');
+    src: url('../fonts/dinmd.woff') format('woff');
+    src: url('../fonts/dinmd.ttf') format('truetype');
+    src: url('../fonts/dinmd.svg#din-mediumregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.about {
+  font-family: 'din';
+}
+
 .about .section{
   display: block;
   position: relative;
@@ -98,18 +113,56 @@
 }
 
 .about .tabs{
+  margin: 0 auto;
   background-color: #13ca92;
-  float: left;
+
+  max-width: 800px;
 }
-.about .tabs dd{
-  display: none;
+.about .tabset li{
+  display: inline-block;
+  cursor: pointer;
+  padding: 30px;
+  width: 25%;
+
+  border-bottom: 2px solid rgb(51, 143, 95);
 }
-  .about .tabs dt{
-    float: left;
+  .about .tabset li a{
+    color: rgb(51, 143, 95);
   }
 
-  .about .tabs dd.active{
-    float: right;
-    display: block;
-    margin-top: 60px;
+  .about .tabset li.active{
+    border-bottom: none;
   }
+
+  .about .tabset li.active a{
+    color: #fff;
+  }
+
+  .about .tabs div{
+    display: none;
+  }
+
+  .about .tabs div.active{
+    text-align: left;
+    display: block;
+    padding: 30px;
+  }
+
+  h1{
+    text-transform: uppercase;
+  }
+
+  .howText{
+    margin: 30px auto;
+    max-width: 300px;
+  }
+
+footer a{
+  color: #fff;
+
+  text-decoration: none;
+}
+
+footer a:hover{
+  text-decoration: underline;
+}

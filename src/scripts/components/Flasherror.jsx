@@ -4,7 +4,7 @@
 
 'use strict';
 
-var React = require('react/addons');
+var React = require('react');
 require('../../styles/Flasherror.css');
 
 var Flasherror = React.createClass({

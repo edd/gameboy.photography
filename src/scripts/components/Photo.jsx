@@ -6,7 +6,7 @@
 
 'use strict';
 
-var React = require('react/addons');
+var React = require('react');
 var Photos = require('../libs/photoStore');
 var dragProxy = require('../libs/dragproxy');
 require('../../styles/Photo.css');
@@ -88,10 +88,6 @@ var Photo = React.createClass({
     if (imageData !== false){
       var image = new Image();
       image.src = imageData;
-
-      console.log(imageData);
-
-      console.log(typeof imageData);
 
       image.onload = function () {
         this.getContext();

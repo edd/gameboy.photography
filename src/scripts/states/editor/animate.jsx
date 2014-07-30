@@ -9,7 +9,7 @@ var states = require('../../libs/states');
 var dragProxy = require('../../libs/dragproxy');
 var Photo = require('../../components/Photo.jsx');
 var GlobalEvents = require('../../libs/events.js');
-var findIndex = require('lodash.findindex');
+var findIndex = require('lodash').findIndex;
 
 require('../../../styles/Animationselector.css');
 
@@ -46,20 +46,24 @@ var AnimationSelector = React.createClass({
 
     var photos = this.state.photos;
 
-    if (isNaN(parseInt(index, 10))) {
-      photos.push(photo);
-    } else {
-      photos.splice(index, 0, photo);
-    }
+    if (this.dragElement === false){
+      if (isNaN(parseInt(index, 10))) {
+        photos.push(photo);
+      } else {
+        photos.splice(index, 0, photo);
+      }
 
-    this.setState({
-      photos: photos
-    });
+      this.setState({
+        photos: photos
+      });
+    }
 
     if (this.dropTarget){
       this.dropTarget.classList.remove('hover');
       this.dropTarget = false;
     }
+
+    this.dragElement = false;
   },
 
   getHeight: function(){
@@ -69,7 +73,7 @@ var AnimationSelector = React.createClass({
   publishHeight: function(){
     var height;
 
-    if (this.props.activeRoute) {
+    if (this.props.activeRouteHandler()) {
       height = 20;
     } else {
       height = this.getHeight();
@@ -110,7 +114,7 @@ var AnimationSelector = React.createClass({
 
     this.dropTarget.classList.remove('hover');
 
-    if (typeof dragging === 'undefined' || dragging == false) {
+    if (typeof dragging === 'undefined' || dragging == false && this.dragElement === false) {
       this.onDragEnd(event, dropTarget);
     } else {
       this.swapArrayItems(this.findElementInArray(dragging), dropTarget);
@@ -207,14 +211,14 @@ var AnimationSelector = React.createClass({
 
   render: function () {
     var frames = this.renderFrames();
-
+    
     return (
         <div className="animationWrapper enter">
           <ul className="animationSteps" onDragOver={this.onDragOver} onDrop={this.onDragEnd} style={this.state.style}>
             {frames}
           </ul>
 
-          {this.props.activeRoute}
+          {this.props.activeRouteHandler()}
         </div>
       )
   }

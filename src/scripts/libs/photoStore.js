@@ -111,8 +111,6 @@ PhotoStore.prototype.restoreFromObject = function(obj) {
     return this.decoratePhoto(photo);
   }.bind(this));
 
-  console.log(this._photos);
-
   this.emit('restored');
 
   return true;

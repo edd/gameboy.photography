@@ -39,14 +39,16 @@ module.exports = {
       test: /\.jpg/,
       loader: 'url-loader?limit=10000&mimetype=image/jpg'
     }, {
-        test: /\.svg/,
-        loader: 'url-loader?limit=10000&mimetype=image/svg+xml'
-    }, {
       test: /\.png/,
       loader: 'url-loader?limit=10000&mimetype=image/png'
     }, {
       test: /\.jsx$/,
       loader: 'jsx-loader'
-    }]
+    },
+    { test: /\.woff$/,   loader: "url-loader?limit=10&minetype=application/font-woff" },
+    { test: /\.ttf$/,    loader: "url-loader?limit=10&minetype=application/font-ttf" },
+    { test: /\.eot$/,    loader: "url-loader?limit=10&minetype=application/font-eot" },
+    { test: /\.svg$/,    loader: "url-loader?limit=10&minetype=application/xml" }
+    ]
   }
 };

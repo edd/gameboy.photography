@@ -4,10 +4,10 @@
 
 'use strict';
 
-var React = require('react/addons');
+var React = require('react');
 var GBCDump = require('../libs/gbcdump.js');
 var Photos = require('../libs/photoStore');
-var Router = require('react-nested-router');
+var Router = require('react-router');
 
 require('../../styles/Savefileupload.css');
 
@@ -15,7 +15,6 @@ var Savefileupload = React.createClass({
 
   onDragOver: function(event){
     event.preventDefault();
-    console.log('enter');
 
     this.getDOMNode().classList.add('hover');
   },
