@@ -1,19 +1,14 @@
 .uploadTarget{
-  width: 100px;
-  height: 100px;
+  width: 100%;
+  height: 100%;
 
   padding-top: 20px;
 
   transition: all 0.5s ease;
 
-  background: transparent url('../images/iconmonstr-upload-9-icon.svg') center 80% no-repeat;
-  background-size: 50% 50%;
-  background-color: #fed200;
-
   position: absolute;
   top: 0;
-  left: 80px;
-  box-shadow: 0px -1px 17px 5px rgba(204, 164, 28, 0.75);
+  left: 0;
 
 
   margin: 0 auto;

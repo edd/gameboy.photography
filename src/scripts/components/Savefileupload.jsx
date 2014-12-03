@@ -7,7 +7,6 @@
 var React = require('react');
 var GBCDump = require('../libs/gbcdump.js');
 var Photos = require('../libs/photoStore');
-var Router = require('react-router');
 
 require('../../styles/Savefileupload.css');
 
@@ -21,7 +20,6 @@ var Savefileupload = React.createClass({
 
   onDragLeave: function(event){
     event.preventDefault();
-    console.log('leave');
 
     this.getDOMNode().classList.remove('hover');
   },
@@ -43,7 +41,7 @@ var Savefileupload = React.createClass({
       flashError: errorString
     });
 
-    this.getDOMNode().classList.remove('peek');
+    this.getDOMNode().classList.remove('hover');
   },
 
   parsePhotos: function(files){
@@ -55,7 +53,7 @@ var Savefileupload = React.createClass({
   },
 
   onCompleteUpload: function(){
-    Router.transitionTo('editor');
+    this.getDOMNode().classList.remove('hover');
   },
 
   render: function () {

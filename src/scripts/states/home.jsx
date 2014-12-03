@@ -24,10 +24,9 @@ module.exports = React.createClass({
     });
   },
 
-
   render: function() {
     return (
-        <div>
+        <div className="container">
           <Flasherror error={this.state.flashError} clearError={this.clearError}></Flasherror>
           <About></About>
         </div>

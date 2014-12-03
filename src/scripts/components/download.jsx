@@ -5,10 +5,9 @@
 'use strict';
 
 var React = require('react');
-var Photos = require('../../libs/photoStore.js');
-var Zip = require('../../libs/zip.js');
+var Photos = require('../libs/photoStore.js');
+var Zip = require('../libs/zip.js');
 var map = require('lodash').map;
-var Router = require('react-router');
 var availableSize = [
   {value: '1', title: 'Normal'},
   {value: '1.5', title: '1.5x'},

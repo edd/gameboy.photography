@@ -6,20 +6,20 @@
 'use strict';
 
 var React = require('react/addons');
-var Photostrip = require('../components/Photostrip.jsx');
-var PhotoViewer = require('../components/Photoviewer.jsx');
-var SaveFileUpload = require('../components/SaveFileUpload.jsx');
-var Controls = require('../components/Controls.jsx');
+var Photostrip = require('./Photostrip.jsx');
+var PhotoViewer = require('./Photoviewer.jsx');
+var Controls = require('./Controls.jsx');
 var Photos = require('../libs/photoStore');
-var Flasherror = require('../components/Flasherror.jsx');
+var Flasherror = require('./Flasherror.jsx');
 var states = require('../libs/states');
-var Router = require('react-router');
 var GlobalEvents = require('../libs/events.js');
+var Download = require('./download.jsx');
+var text = require('../content/about.json');
 
 // CSS
 require('../../styles/reset.css');
 require('../../styles/main.css');
-
+require('../../styles/Paletteselector.css');
 
 module.exports = React.createClass({
   getInitialState: function(){
@@ -59,14 +59,9 @@ module.exports = React.createClass({
     this.setState({photos: Photos})
   },
 
+
   componentWillReceiveProps: function(){
     GlobalEvents.emit('animationHeight', 20);
-  },
-
-  componentWillMount: function(){
-    if (this.state.photos.length === 0){
-      Router.transitionTo('/');
-    }
   },
 
   componentDidMount: function(){
@@ -75,23 +70,32 @@ module.exports = React.createClass({
 
   /*jshint ignore:start */
   render: function() {
-    var shouldShowPhotos = true;//(this.props.activeRoute === null);
+    var shouldShowPhotos = true;
 
     document.documentElement.className = 'processing';
 
+    if (this.state.photos.length === 0){
+      return (<footer className="section fourth">
+          <p>Drag a Gameboy save file on to the page to get started.</p>
+          <p>For instructions on getting photos from your Gameboy camera, try <a href="http://gameboyphoto.com/">Gameboyphoto.com</a></p>
+        </footer>);
+    }
+
     return (
-        <div className='editor'>
-          <Controls
-              changeState={this.changeState}
-              isAnythingSelected={this.state.selected}
-              state={this.state.status} />
+        <div className="editorContainer">
+        <aside className="section second editor">
           <Flasherror error={this.state.flashError} clearError={this.clearError}></Flasherror>
 
-          {this.props.activeRouteHandler()}
-
           <Photostrip photos={this.state.photos} menuActive={shouldShowPhotos}></Photostrip>
+        </aside>
+        <main className="section third">
+          <Download />
+        </main>
+        <footer className="section fourth">
+          <p>Tada!</p>
+        </footer>
         </div>
-        );
+      );
   }
 
   /*jshint ignore:end */

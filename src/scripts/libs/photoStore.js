@@ -92,16 +92,16 @@ PhotoStore.prototype.save = function(id) {
 
 PhotoStore.prototype.restore = function(id) {
   if (typeof window.localStorage.photos !== 'undefined') {
-    photos = JSON.parse(window.localStorage.photos);
+  //   photos = JSON.parse(window.localStorage.photos);
 
-    this._photos = photos.map(function(photo){
-      return this.decoratePhoto(photo);
-    }.bind(this));
+  //   this._photos = photos.map(function(photo){
+  //     return this.decoratePhoto(photo);
+  //   }.bind(this));
 
-    this.emit('restored');
+  //   this.emit('restored');
 
-    return true;
-  }
+  //   return true;
+ }
 
   return false;
 };

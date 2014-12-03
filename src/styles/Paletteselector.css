@@ -1,54 +1,3 @@
-.controls .submenu .palettePicker{
-  display: block;
-}
-.controls .palettePicker{
-  display: none;
-
-  position: absolute;
-  top: 58px;
-  left: 0;
-
-  padding: 10px 10px;
-
-  width: 100%;
-  background: #FFDC3B;
-}
-
-.palettePicker li{
-  display: inline-block;
-  margin: 0 5px 0 0;
-}
-
-.palettePicker button{
-  display: block;
-  width: 90px;
-  height: 84px;
-  padding: 0;
-}
-
-.palettePicker .Nothing{
-  background: transparent url(../images/filters/nothing.png) -20px -10px no-repeat;
-}
-
-.palettePicker .Gameboy{
-  background: transparent url(../images/filters/gameboy.png) -20px -10px no-repeat;
-}
-
-.palettePicker .Sepia{
-  background: transparent url(../images/filters/sepia.png) -20px -10px no-repeat;
-}
-
-.palettePicker .LordKelvin{
-  background: transparent url(../images/filters/lordkelvin.jpg) -20px -10px no-repeat;
-}
-
-.palettePicker label{
-  font-size: 0.7em;
-  font-family: Helvetica, Arial, sans-serif;
-  text-align: center;
-}
-
-/*******/
 .downloadPanel{
   margin: 0 auto 20px auto;
   background: #fff;
@@ -56,11 +5,7 @@
   padding: 40px;
 
   font-family: Helvetica;
-
-  -webkit-box-shadow: 0px 5px 5px 0px rgba(50, 50, 50, 0.45);
-  -moz-box-shadow:    0px 5px 5px 0px rgba(50, 50, 50, 0.45);
-  box-shadow:         0px 5px 5px 0px rgba(50, 50, 50, 0.45);
-
+  color: #000;
 }
 
 .downloadPanel h1{
@@ -71,7 +16,7 @@
 
 .downloadPanel form{
   margin: 0 auto;
-  width: 20%;
+  width: 30%;
   min-width: 320px;
 }
 
