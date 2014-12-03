@@ -58,8 +58,6 @@ var Savefileupload = React.createClass({
     Router.transitionTo('editor');
   },
 
-
-
   render: function () {
       return (
         <div className="uploadTarget" onDragOver={this.onDragOver} onDragLeave={this.onDragLeave} onDrop={this.onDrop} onDragEnd={this.onDrop}>

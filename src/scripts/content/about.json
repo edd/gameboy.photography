@@ -1,0 +1,19 @@
+module.exports = {
+  "title": "Gameboy Camera Lab",
+  "strapline": "The Gameboy Camera Darkroom",
+  "prepopulate": "Don't have a camera? Click here to try it anyway.",
+
+  "methodTitles": {
+    "cartridge": "A cartridge dumper",
+    "madcatz": "Madcatz cable",
+    "scanner": "A scanner",
+    "other": "Other"
+  },
+  "methods": {
+    "cartridge": 
+      "A cartridge dumper of some variety is the only way to use this site, but it's also by far the best option. Between the BleepBloop, the Smartboy, an Arduino based reader - if you can extract the .SAV file from your cartridge, you're all set to use this site.",
+    "madcatz": "If you have a Windows 95 PC sitting around, the Madcatz Printer Cable is an option. That PC has a parallel port, right?",
+    "scanner": "We're getting desperate here, but it's still workable. If you have the Gameboy Printer, you can print out your photos on some fresh paper and scan them in. Failing that, you can get some reasonable results from simply scanning the Gameboy screen",
+    "other": "There may well be an option that I'm missing here, but for now, I suspect you're out of luck."
+  }
+}
