@@ -9,7 +9,7 @@ var React = require('react/addons');
 var About = require('../components/About.jsx');
 var Flasherror = require('../components/Flasherror.jsx');
 
-module.exports = React.createClass({
+var Home = React.createClass({
 
   getInitialState: function(){
     return {
@@ -33,3 +33,4 @@ module.exports = React.createClass({
       );
   }
 });
+React.renderComponent(Home(), document.body); 

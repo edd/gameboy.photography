@@ -8,7 +8,6 @@
 var React = require('react/addons');
 var Photostrip = require('./Photostrip.jsx');
 var PhotoViewer = require('./Photoviewer.jsx');
-var Controls = require('./Controls.jsx');
 var Photos = require('../libs/photoStore');
 var Flasherror = require('./Flasherror.jsx');
 var states = require('../libs/states');
@@ -17,7 +16,6 @@ var Download = require('./download.jsx');
 var text = require('../content/about.json');
 
 // CSS
-require('../../styles/reset.css');
 require('../../styles/main.css');
 require('../../styles/Paletteselector.css');
 
@@ -93,6 +91,7 @@ module.exports = React.createClass({
         </main>
         <footer className="section fourth">
           <p>Tada!</p>
+          <p>Made by <a href="http://twitter.com/eddhannay">@eddhannay</a>. Design by <a href="https://twitter.com/derekboateng">Derek Boateng</a></p>
         </footer>
         </div>
       );

@@ -94,4 +94,4 @@ GBCDump.prototype.parsePhotos = function parsePhotos(){
   didCompleteCallback();
 };
 
-module.exports= new GBCDump();
+module.exports = new GBCDump();

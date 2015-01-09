@@ -6,7 +6,10 @@ html, body {
   height: 100%;
   display: flex;
 
-  font-family: Helvetica;
+  font-family: 'din', Helvetica;
+
+  padding: 0;
+  margin: 0;
 }
 
 html.home{

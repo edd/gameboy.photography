@@ -20,7 +20,6 @@ var About = React.createClass({
         return (
             <div className="about">
               <header className="section first">
-                <h1>{text.title}</h1>
                 <div className="imageContainer">
                   <img src="images/gameboy.png" />
                 </div>

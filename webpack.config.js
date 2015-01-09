@@ -15,7 +15,7 @@ module.exports = {
   cache: true,
   debug: true,
   devtool: 'inline-sourcemap',
-  entry: './src/scripts/routes/routes.jsx',
+  entry: './src/scripts/states/home.jsx',
 
   stats: {
     colors: true,
@@ -45,10 +45,10 @@ module.exports = {
       test: /\.jsx$/,
       loader: 'jsx-loader'
     },
-    { test: /\.woff$/,   loader: "url-loader?limit=10&minetype=application/font-woff" },
-    { test: /\.ttf$/,    loader: "url-loader?limit=10&minetype=application/font-ttf" },
-    { test: /\.eot$/,    loader: "url-loader?limit=10&minetype=application/font-eot" },
-    { test: /\.svg$/,    loader: "url-loader?limit=10&minetype=application/xml" }
+    { test: /\.woff$/,   loader: "url-loader?limit=1000000&mimetype=application/font-woff" },
+    { test: /\.ttf$/,    loader: "url-loader?limit=1000000&mimetype=application/font-ttf" },
+    { test: /\.eot$/,    loader: "url-loader?limit=1000000&mimetype=application/font-eot" },
+    { test: /\.svg$/,    loader: "url-loader?limit=1000000&mimetype=application/xml" }
     ]
   }
 };

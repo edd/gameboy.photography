@@ -78,7 +78,6 @@ module.exports = React.createClass({
               </p>
               <p className="complete">
                 <button className="control submit" onClick={this.zipPhotos}>Download</button>
-                <button className="control cancel" onClick={this.cancel}>Cancel</button>
               </p>
             </form>
           </div>
